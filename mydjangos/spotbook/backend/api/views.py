@@ -20,3 +20,17 @@ def spotList(request):
     serializer = SpotSerializer(spotList, many=True)
 
     return Response(serializer.data)
+
+@api_view(['GET'])
+def spotDetail(request, pk):
+    spot = Spot.objects.get(id=pk)
+    serializer = SpotSerializer(spot, many=False)
+
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def spotCreate(request):
+    serializer = SpotSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
