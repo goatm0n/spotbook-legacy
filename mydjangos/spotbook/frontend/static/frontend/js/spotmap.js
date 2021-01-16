@@ -6,3 +6,15 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(mymap);
 
 L.control.scale().addTo(mymap);
+
+function fetchSpotlist() {
+    console.log('fetching...');
+    fetch('http://127.0.0.1:8000/backend/api/spot-list/').then(
+        (response) => {
+            var data = response.json()
+            console.log(data)
+        }
+    );
+};
+
+fetchSpotlist();
