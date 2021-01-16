@@ -1,32 +1,34 @@
 <!DOCTYPE html>  
 <html>
     <head>
-        <!-- bootscrap css -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <!-- bootstrap js -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <style>
+            .leaflet-container {
+                width: 100%;
+                height: 100vh;
+            }
+            #mapid {
+                width: 50%;
+                height: 50vh;
+            }
+        </style>
     </head>
     <body>
-        <div id='navbar-container'>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="http://127.0.0.1:8000/spotbook/">Spotbook</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Spotmap</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
+        <div id='mapid'></div>
 
-        <div id='spotmap-container'>
-            <h2>spotmap goes here</h2>
-        </div>
+        <script>
+            var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+            }).addTo(mymap);
+            L.control.scale().addTo(mymap);
+        </script>
+
+    
+    </head>
+    <body>
+    
     </body>
 </html>
