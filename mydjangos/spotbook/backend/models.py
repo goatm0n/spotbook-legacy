@@ -1,5 +1,4 @@
 from django.contrib.gis.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class Spot(models.Model):
     title = models.CharField(max_length=250)
