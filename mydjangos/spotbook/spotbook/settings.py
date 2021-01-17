@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'backend',
     'frontend',
+    'accounts',
     'django.contrib.gis',
     'leaflet',
     'rest_framework',
