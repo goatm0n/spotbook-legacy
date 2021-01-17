@@ -5,4 +5,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('spotbook/', include('frontend.urls')),
     path('backend/', include('backend.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
