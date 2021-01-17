@@ -1,6 +1,5 @@
 from django.contrib.gis.db import models
 
-# Create your models here.
 class Spot(models.Model):
     title = models.CharField(max_length=250)
     location = models.PointField(srid=4326)
@@ -20,4 +19,3 @@ class Spot(models.Model):
 
     def __str__(self):
         return self.title
-
