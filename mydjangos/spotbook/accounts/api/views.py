@@ -20,3 +20,17 @@ def accountList(request):
     serializer = AccountSerializer(accountList, many=True)
 
     return Response(serializer.data)
+
+@api_view(['GET'])
+def accountDetail(request, pk):
+    account = Account.objects.get(id=pk)
+    serializer = AccountSerializer(account, many=False)
+
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def accountCreate(request):
+    serializer = AccountSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
