@@ -11,3 +11,6 @@ def account_view(request):
 
 def login_view(request):
     return render(request, 'frontend/login.html')
+
+def signup_view(request):
+    return render(request, 'frontend/signup.html')

@@ -28,12 +28,13 @@
             </nav>
         </div>
 
-        <div id='login-form-container'>
-            <a href='http://127.0.0.1:8000/spotbook/login'>login form</a>
-        </div>
+        <div id='signup-container'>
+            <form action='http://127.0.0.1:8000/accounts/api/account-create/' method='post'>
+                {% csrf_token %}
+                <input id='account-form' type='text'>
+                <input type='submit' value='OK'>
 
-        <div id='signup-form-container'>
-            <a href='http://127.0.0.1:8000/spotbook/signup'>signup form</a>
+            </form>
         </div>
 
     </body>
