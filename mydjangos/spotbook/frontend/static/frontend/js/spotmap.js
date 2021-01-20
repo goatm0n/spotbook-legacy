@@ -7,14 +7,19 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 L.control.scale().addTo(mymap);
 
-function fetchSpotlist() {
-    console.log('fetching...');
-    fetch('http://127.0.0.1:8000/backend/api/spot-list/').then(
-        (response) => {
-            var data = response.json()
-            console.log(data)
-        }
-    );
-};
+async function getSpots() {
+    let url = 'http://127.0.0.1:8000/backend/api/spot-list/'
+    try {
+        let response = await(fetch(url));
+        return await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
 
-fetchSpotlist();
+async function displaySpots() {
+    let spots = await getSpots();
+    console.log(spots)
+}
+
+displaySpots();
