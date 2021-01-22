@@ -1,4 +1,4 @@
-var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+var mymap = L.map('mapid').setView([55.8642, -4.2518], 13);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -17,11 +17,34 @@ async function getSpots() {
     }
 }
 
-async function displaySpots() {
-    let spots = await getSpots();
-    console.log(spots)
+function spotMarker(spot) {
+    title = spot.properties.title
+    spotType = spot.properties.spotType
+    description = spot.properties.description
+    coordinates = spot.geometry.coordinates
+
+    var myMarker = L.marker([coordinates[1], coordinates[0]]).addTo(mymap);
+    myMarker.bindPopup(`<b> ${title} </b><br>${spotType}<br>${description}`);
 }
 
-displaySpots();
+async function showSpots() {
+    let spots = await getSpots();
+    const spotList = spots.features;
+    spotList.forEach(spot => {
+        spotMarker(spot);
+    })
+    
+}
 
-var marker = L.marker([51.5, -0.09]).addTo(mymap);
+showSpots();
+
+var popup = L.popup();
+
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent('You clicked the map at ' + e.latlng.toString())
+        .openOn(mymap);
+}
+
+mymap.on('click', onMapClick);
