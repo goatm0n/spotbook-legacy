@@ -38,14 +38,41 @@ async function validateAccount(username, email) {
 
     if (validAccount == true) {
         console.log('account details validated')
+        return true
     } else if (validAccount == false) {
         console.log('account details not validated')
+        return false
     }
 
 };
 
+function postAccountForm(email, username) {
+    let _data = {
+        email: `${email}`,
+        username: `${username}`,
+        date_joined: "2021-01-18T12:24:20.564611Z",
+        last_login: "2021-01-18T12:24:20.564611Z",
+        is_admin: false,
+        is_active: true,
+        is_staff: false,
+        is_superuser: false
+    }
 
-function createAccount() {
+    fetch('http://127.0.0.1:8000/accounts/api/account-create/', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(_data)
+    }).then(response => {
+        console.log(response)
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
+
+async function createAccount() {
 
     const emailForm = document.getElementById('email-form');
     const usernameForm = document.getElementById('username-form');
@@ -54,6 +81,10 @@ function createAccount() {
     console.log(username);
     console.log(email);
 
-    validateAccount(username, email)
+    let valid =  await validateAccount(username, email)
+    if (valid == true) {
+        postAccountForm(email, username)
+    }
 
 };
+

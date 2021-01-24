@@ -2,6 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from accounts.models import Account
 from .serializers import AccountSerializer
+import json
+from django.http import JsonResponse
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -30,7 +32,13 @@ def accountDetail(request, pk):
 
 @api_view(['POST'])
 def accountCreate(request):
-    serializer = AccountSerializer(data=request.data)
+    payload = json.loads(request.body)
 
-    if serializer.is_valid():
-        serializer.save()
+    account = Account.objects.create_user(
+        email=payload['email'],
+        username=payload['username']
+    )
+
+    serializer = AccountSerializer(account)
+    if serializer.is_valid:
+        return JsonResponse({'accounts': serializer.data})
