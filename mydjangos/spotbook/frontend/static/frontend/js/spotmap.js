@@ -1,4 +1,4 @@
-var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+var mymap = L.map('mapid').setView([55.8642, -4.2518], 13);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -7,14 +7,44 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 L.control.scale().addTo(mymap);
 
-function fetchSpotlist() {
-    console.log('fetching...');
-    fetch('http://127.0.0.1:8000/backend/api/spot-list/').then(
-        (response) => {
-            var data = response.json()
-            console.log(data)
-        }
-    );
-};
+async function getSpots() {
+    let url = 'http://127.0.0.1:8000/backend/api/spot-list/'
+    try {
+        let response = await(fetch(url));
+        return await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
 
-fetchSpotlist();
+function spotMarker(spot) {
+    title = spot.properties.title
+    spotType = spot.properties.spotType
+    description = spot.properties.description
+    coordinates = spot.geometry.coordinates
+
+    var myMarker = L.marker([coordinates[1], coordinates[0]]).addTo(mymap);
+    myMarker.bindPopup(`<b> ${title} </b><br>${spotType}<br>${description}`);
+}
+
+async function showSpots() {
+    let spots = await getSpots();
+    const spotList = spots.features;
+    spotList.forEach(spot => {
+        spotMarker(spot);
+    })
+    
+}
+
+showSpots();
+
+var popup = L.popup();
+
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent('You clicked the map at ' + e.latlng.toString())
+        .openOn(mymap);
+}
+
+mymap.on('click', onMapClick);

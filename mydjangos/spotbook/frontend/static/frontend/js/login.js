@@ -8,6 +8,7 @@ async function getAccounts() {
     }
 }
 
+
 async function login() {
     const usernameForm = document.getElementById('username-form')
     const username = usernameForm.value
@@ -17,7 +18,29 @@ async function login() {
     console.log(email)
 
     let accounts = await getAccounts();
-    console.log(accounts)
+    var usernameFound = false;
+    var emailFound = false;
+    var userVerified = false;
 
+    
+    accounts.forEach(account => {
+        if (account.username == username) {
+            console.log('username exists');
+            usernameFound = true;
+            
+        }
+    })
+
+    accounts.forEach(account => {
+        if (account.email == email) {
+            console.log('email exists');
+            emailFound = true
+        }
+    })
+
+    if (usernameFound == true && emailFound == true) {
+        console.log('user verified')
+        userVerified = true
+    }
 
 }
