@@ -14,3 +14,6 @@ def login_view(request):
 
 def signup_view(request):
     return render(request, 'frontend/signup.html')
+
+def spotpageBase_view(request):
+    return render(request, 'frontend/spotpage-base.html')
