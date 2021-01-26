@@ -28,25 +28,22 @@
             </nav>
         </div>
 
-        <div id='login-form-container'>
-            <div id='login-container'>
-                <a href='http://127.0.0.1:8000/spotbook/login'>login form</a>
+        <div id='create-spot-form-container'>
+            <div id='create-spot-form'>
+                <input id='title-form' placeholder="title">
+                <input id='description-form' placeholder="description">
+                <select id="spotType-form">
+                    <option value="Skatepark">Skatepark</option>
+                    <option value="Street">Street</option>
+                    <option value="D.I.Y">D.I.Y</option>
+                </select>
+                <input id='latitude-form' placeholder="latitude">
+                <input id='longitude-form' placeholder="longitude">
+                <button class='btn btn-primary' id='send-spot-form' onClick='postSpotForm()'>Submit</button>
             </div>
-        </div>
 
-        <div id='signup-form-container'>
-            <a href='http://127.0.0.1:8000/spotbook/signup'>signup form</a>
-        </div>
-
-        <div id='profile-container'>
-            <div id='profile-header'>
-                <div id='username-container'></div>
-                <div id='email-container'></div>
-            </div>
-            <div id='profile-content'>
-                <div id='posts'>posts go here</div>
-                <div id='spots'>spots go here</div>
-            </div>
+            {% load static %}
+            <script src="{% static 'frontend/js/createSpotForm.js' %}" type='text/javascript'></script>
         </div>
 
     </body>
