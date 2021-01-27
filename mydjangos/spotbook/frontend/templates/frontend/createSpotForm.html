@@ -1,32 +1,30 @@
-<!DOCTYPE html>  
-<html>
-    <head>
-        <!-- bootscrap css -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <!-- bootstrap js -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <div id='navbar-container'>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="http://127.0.0.1:8000/spotbook/">Spotbook</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="http://127.0.0.1:8000/spotbook/spotmap/">Spotmap</a>
-                            </li>
-                            <li class='nav-item'>
-                                <a class='nav-link' href='http://127.0.0.1:8000/spotbook/account/'>Account</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+{% extends 'frontend/base.html' %}
+
+
+{% block content %}
+    <div id='create-spot-form-container'>
+        <div id='create-spot-form'>
+            <input id='title-form' placeholder="title">
+            <input id='description-form' placeholder="description">
+            <select id="spotType-form">
+                <option value="Skatepark">Skatepark</option>
+                <option value="Street">Street</option>
+                <option value="D.I.Y">D.I.Y</option>
+            </select>
+            <input id='latitude-form' placeholder="latitude">
+            <input id='longitude-form' placeholder="longitude">
+            <button class='btn btn-primary' id='send-spot-form' onClick='postSpotForm()'>Submit</button>
         </div>
+
+        {% load static %}
+        <script src="{% static 'frontend/js/createSpotForm.js' %}" type='text/javascript'></script>
+    </div>
+{% endblock content %}
+
+    
+
+
+
 
         <div id='create-spot-form-container'>
             <div id='create-spot-form'>
