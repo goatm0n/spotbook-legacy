@@ -4,8 +4,7 @@ from accounts.models import Account
 from .serializers import AccountSerializer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from django.http import JsonResponse
-import json
+from rest_framework import status
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -39,7 +38,7 @@ def accountCreate(request):
     serializer = AccountSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        return JsonResponse(serializer.data, status=201)
-    return JsonResponse(serializer.errors, status=400)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
