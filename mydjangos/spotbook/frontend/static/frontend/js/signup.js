@@ -55,7 +55,8 @@ function postAccountForm(email, username) {
         is_admin: false,
         is_active: true,
         is_staff: false,
-        is_superuser: false
+        is_superuser: false,
+        csrfmiddlewaretoken: '{{ csrf_token }}'
     }
 
     fetch('http://127.0.0.1:8000/accounts/api/account-create/', {
