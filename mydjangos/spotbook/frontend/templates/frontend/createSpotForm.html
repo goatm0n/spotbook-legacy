@@ -20,29 +20,3 @@
         <script src="{% static 'frontend/js/createSpotForm.js' %}" type='text/javascript'></script>
     </div>
 {% endblock content %}
-
-    
-
-
-
-
-        <div id='create-spot-form-container'>
-            <div id='create-spot-form'>
-                <input id='title-form' placeholder="title">
-                <input id='description-form' placeholder="description">
-                <select id="spotType-form">
-                    <option value="Skatepark">Skatepark</option>
-                    <option value="Street">Street</option>
-                    <option value="D.I.Y">D.I.Y</option>
-                </select>
-                <input id='latitude-form' placeholder="latitude">
-                <input id='longitude-form' placeholder="longitude">
-                <button class='btn btn-primary' id='send-spot-form' onClick='postSpotForm()'>Submit</button>
-            </div>
-
-            {% load static %}
-            <script src="{% static 'frontend/js/createSpotForm.js' %}" type='text/javascript'></script>
-        </div>
-
-    </body>
-</html>

@@ -5,7 +5,6 @@ from .serializers import SpotSerializer
 import json
 from django.http import JsonResponse
 from django.shortcuts import redirect
-from django.views.decorators.csrf import csrf_exempt
 from django.contrib.gis.geos import Point
 
 @api_view(['GET'])
@@ -34,7 +33,6 @@ def spotDetail(request, pk):
     return Response(serializer.data)
 
 @api_view(['POST'])
-@csrf_exempt
 def spotCreate(request):
     payload = request.data
     lat = payload['geometry']['coordinates'][0]
@@ -51,5 +49,4 @@ def spotCreate(request):
     serializer = SpotSerializer(spot, many=False)
     if serializer.is_valid:
         spot.save()
-
-    return Response(serializer.data)
+        return JsonResponse({'spots': serializer.data})
