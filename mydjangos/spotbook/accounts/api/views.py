@@ -2,8 +2,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from accounts.models import Account
 from .serializers import AccountSerializer
-import json
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
+import json
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -30,15 +32,14 @@ def accountDetail(request, pk):
 
     return Response(serializer.data)
 
+
 @api_view(['POST'])
+@csrf_exempt
 def accountCreate(request):
-    payload = json.loads(request.body)
+    serializer = AccountSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse(serializer.data, status=201)
+    return JsonResponse(serializer.errors, status=400)
 
-    account = Account.objects.create_user(
-        email=payload['email'],
-        username=payload['username']
-    )
 
-    serializer = AccountSerializer(account)
-    if serializer.is_valid:
-        return JsonResponse({'accounts': serializer.data})
