@@ -9,4 +9,4 @@ class Clip(models.Model):
     textContent = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.user
+        return self.user.username
