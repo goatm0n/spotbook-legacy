@@ -1,6 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from backend.models import Spot
+from spots.models import Spot
 from .serializers import SpotSerializer
 import json
 from django.http import JsonResponse

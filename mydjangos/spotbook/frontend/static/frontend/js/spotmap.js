@@ -8,7 +8,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 L.control.scale().addTo(mymap);
 
 async function getSpots() {
-    let url = 'http://127.0.0.1:8000/backend/api/spot-list/'
+    let url = 'http://127.0.0.1:8000/spots/api/spot-list/'
     try {
         let response = await(fetch(url));
         return await response.json();

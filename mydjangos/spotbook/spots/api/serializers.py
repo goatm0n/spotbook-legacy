@@ -1,5 +1,5 @@
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
-from backend.models import Spot
+from spots.models import Spot
 
 class SpotSerializer(GeoFeatureModelSerializer):
     class Meta:
