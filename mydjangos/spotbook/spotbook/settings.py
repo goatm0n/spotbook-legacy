@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'spots',
     'frontend',
     'accounts',
+    'clips',
     'django.contrib.gis',
     'leaflet',
     'rest_framework',

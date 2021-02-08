@@ -6,4 +6,5 @@ urlpatterns = [
     path('spotbook/', include('frontend.urls')),
     path('spots/', include('spots.urls')),
     path('accounts/', include('accounts.urls')),
+    path('clips/', include('clips.urls')),
 ]

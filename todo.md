@@ -1,13 +1,8 @@
 1. Spots
     ->Creating
         ->from spotmap
-    -> Content
-        -> text
-        -> photos
-        -> videos
-        -> instagram
-        -> like content
-        -> share content
+    -> Clips
+        -> Clips belong to spot and user
     -> User Permissions
         -> create spot
         -> upload content to spot
@@ -29,9 +24,17 @@
     -> Profile
         -> Image
         -> Spots
-        -> Content
+        -> Clips
         -> Text
     -> Follow 
+
+3. Clips
+    -> text?
+    -> photos
+    -> videos
+    -> instagram
+    -> like clips
+    -> share clips
 
 3. Spotmap
     -> Interactive map
