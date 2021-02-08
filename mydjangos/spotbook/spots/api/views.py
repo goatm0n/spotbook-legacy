@@ -2,10 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from spots.models import Spot
 from .serializers import SpotSerializer
-import json
-from django.http import JsonResponse
-from django.shortcuts import redirect
-from django.contrib.gis.geos import Point
+from rest_framework import status
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -34,19 +31,8 @@ def spotDetail(request, pk):
 
 @api_view(['POST'])
 def spotCreate(request):
-    payload = request.data
-    lat = payload['geometry']['coordinates'][0]
-    lng = payload['geometry']['coordinates'][1]
-    point = Point(lat, lng)
-
-    spot = Spot(
-        title=payload['properties']['title'], 
-        location=point,
-        description=payload['properties']['description'],
-        spotType=payload['properties']['spotType']
-    )
-
-    serializer = SpotSerializer(spot, many=False)
-    if serializer.is_valid:
-        spot.save()
-        return JsonResponse({'spots': serializer.data})
+    serializer = SpotSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(status.HTTP_400_BAD_REQUEST)
