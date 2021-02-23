@@ -22,9 +22,10 @@ function spotMarker(spot) {
     spotType = spot.properties.spotType
     description = spot.properties.description
     coordinates = spot.geometry.coordinates
+    id = spot.id
 
     var myMarker = L.marker([coordinates[1], coordinates[0]]).addTo(mymap);
-    myMarker.bindPopup(`<b> ${title} </b><br>${spotType}<br>${description}`);
+    myMarker.bindPopup(`<b> ${title} </b><br>${spotType}<br>${description}<br><a href='#${id}'>spot page</a>`);
 }
 
 async function showSpots() {
