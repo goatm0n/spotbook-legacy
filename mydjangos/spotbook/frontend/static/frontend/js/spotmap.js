@@ -25,7 +25,7 @@ function spotMarker(spot) {
     id = spot.id
 
     var myMarker = L.marker([coordinates[1], coordinates[0]]).addTo(mymap);
-    myMarker.bindPopup(`<b> ${title} </b><br>${spotType}<br>${description}<br><a href='#${id}'>spot page</a>`);
+    myMarker.bindPopup(`<b> ${title} </b><br>${spotType}<br>${description}<br><a href='http://127.0.0.1:8000/spotbook/spotpage/${id}'>spot page</a>`);
 }
 
 async function showSpots() {
