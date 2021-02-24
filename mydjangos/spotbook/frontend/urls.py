@@ -8,4 +8,5 @@ urlpatterns = [
     path('login/', views.login_view, name='login-page'),
     path('signup/', views.signup_view, name='signup-page'),
     path('create-spot-form/', views.createSpotFormView, name='create-spot-form-page'),
+    path('spotpage/<str:pk>/', views.spotpage_view, name='spotpage-page'),
 ]
