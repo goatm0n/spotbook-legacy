@@ -1,6 +1,11 @@
 from django.contrib.gis.db import models
+from django.conf import settings
+
+User = settings.AUTH_USER_MODEL
+
 
 class Spot(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     title = models.CharField(max_length=250)
     location = models.PointField(srid=4326)
     description = models.TextField()

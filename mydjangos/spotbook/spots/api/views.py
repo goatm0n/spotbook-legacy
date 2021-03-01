@@ -31,10 +31,10 @@ def spotDetail(request, pk):
     return Response(serializer.data)
 
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def spot_create(request):
     serializer = SpotSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save()#user=request.user)
+        serializer.save(user=request.user)
         return Response(serializer.data, status=201)
     return Response({}, status=400)
