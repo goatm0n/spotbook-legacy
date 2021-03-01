@@ -43,7 +43,12 @@
             -> Show most popular first
                 -> Zoom level controls spots shown
 
-4. SpotFeed
+4. Spotpage
+    -> view spot details
+    -> view spot clips
+    -> upload clip to spot
+
+5. SpotFeed
     -> Spot content
     -> newsfeed
         -> content from followed spots
