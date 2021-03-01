@@ -39,13 +39,76 @@ async function showSpots() {
 
 showSpots();
 
+function postSpotForm() {
+    console.log(coords);
+}
+
+function renderCreateSpotForm() {
+    const container = document.getElementById('popup-html-container');
+    const createSpotFormContainer = document.createElement('div');
+    createSpotFormContainer.id = 'create-spot-form-container';
+
+    const title = document.createElement('input');
+    title.type = 'text'
+    title.id = 'title-input';
+    title.name = 'title-input';
+    title.placeholder = 'spot-title';
+    title.setAttribute('class', 'form-control');
+    createSpotFormContainer.appendChild(title);
+
+    const description = document.createElement('input');
+    description.type = 'text';
+    description.id = 'description-input';
+    description.name = 'description-input';
+    description.placeholder = 'spot-description';
+    description.setAttribute('class', 'form-control');
+    createSpotFormContainer.appendChild(description);
+
+    const spotTypes = document.createElement('select');
+    spotTypes.setAttribute('class', 'form-control');
+
+    const street = document.createElement('option');
+    street.text = 'Street';
+    street.value = 'Street';
+    spotTypes.add(street);
+
+    const skatepark = document.createElement('option');
+    skatepark.text = 'Skatepark';
+    skatepark.value = 'Skatepark';
+    spotTypes.add(skatepark);
+
+    const diy = document.createElement('option');
+    diy.text = 'D.I.Y';
+    diy.value = 'D.I.Y';
+    spotTypes.add(diy);
+
+    createSpotFormContainer.appendChild(spotTypes);
+
+    const submitButton = document.createElement('button');
+    submitButton.id = 'submit-input';
+    submitButton.setAttribute('class', 'btn btn-success');
+    submitButton.innerHTML = 'Submit';
+    submitButton.addEventListener('click', postSpotForm)
+    createSpotFormContainer.appendChild(submitButton);
+
+    container.appendChild(createSpotFormContainer);
+
+    return container
+
+}
+
 var popup = L.popup();
 
 function onMapClick(e) {
+    coords = e.latlng;
     popup
-        .setLatLng(e.latlng)
-        .setContent('You clicked the map at ' + e.latlng.toString())
+        .setLatLng(coords)
+        .setContent(`<div id="popup-html-container">
+            <p> You clicked the map at ${coords.toString()} </p>
+        </div>
+        `)
         .openOn(mymap);
+    renderCreateSpotForm();
 }
 
 mymap.on('click', onMapClick);
