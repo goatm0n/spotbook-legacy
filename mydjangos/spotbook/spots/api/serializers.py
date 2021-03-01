@@ -5,4 +5,4 @@ class SpotSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Spot
         geo_field = 'location'
-        fields = ('title', 'location', 'spotType', 'description', 'id')
+        fields = ('user', 'title', 'location', 'spotType', 'description', 'id')

@@ -1,4 +1,5 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from spots.models import Spot
 from .serializers import SpotSerializer
@@ -30,9 +31,10 @@ def spotDetail(request, pk):
     return Response(serializer.data)
 
 @api_view(['POST'])
-def spotCreate(request):
+@permission_classes([IsAuthenticated])
+def spot_create(request):
     serializer = SpotSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(status.HTTP_400_BAD_REQUEST)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=201)
+    return Response({}, status=400)
