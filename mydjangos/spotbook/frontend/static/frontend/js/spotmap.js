@@ -39,8 +39,65 @@ async function showSpots() {
 
 showSpots();
 
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+function stringifySpotForm() {
+    let spotObj = {
+        "geometry": {
+            "type": "Point",
+            "coordinates": [coords.lng, coords.lat]
+        },
+        "properties": {
+           "title":  document.getElementById('title-input').value,
+           "description": document.getElementById('description-input').value,
+           "spotType": document.getElementById('spotType-input').value
+        }
+    }
+
+    let spotJson = JSON.stringify(spotObj);
+    
+    return spotJson;
+
+}
+
+function postForm(url, data) {
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-type': 'application/json',
+            'X-CSRFToken': csrftoken
+        },
+        body: data,
+    }).then(response => {
+        console.log(response)
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
+
 function postSpotForm() {
-    console.log(coords);
+    const spotJson = stringifySpotForm();
+    let url = "http://127.0.0.1:8000/spots/api/spot-create/";
+
+    postForm(url, spotJson);
+    
 }
 
 function renderCreateSpotForm() {
@@ -65,6 +122,7 @@ function renderCreateSpotForm() {
     createSpotFormContainer.appendChild(description);
 
     const spotTypes = document.createElement('select');
+    spotTypes.id = 'spotType-input';
     spotTypes.setAttribute('class', 'form-control');
 
     const street = document.createElement('option');
