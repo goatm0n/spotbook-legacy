@@ -9,4 +9,5 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup-page'),
     path('create-spot-form/', views.createSpotFormView, name='create-spot-form-page'),
     path('spotpage/<str:pk>/', views.spotpage_view, name='spotpage-page'),
+    path('upload-clip/<str:pk>/', views.upload_clip_view, name='upload-clip-page'),
 ]
