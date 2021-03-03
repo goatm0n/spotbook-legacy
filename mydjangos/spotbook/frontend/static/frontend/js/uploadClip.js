@@ -67,4 +67,4 @@ function renderClipForm(parentDiv) {
     parent.appendChild(container);
 }
 
-renderClipForm('content');
+renderClipForm('upload-spot-clip');
