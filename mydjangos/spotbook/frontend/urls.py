@@ -9,4 +9,5 @@ urlpatterns = [
     path('upload-clip/<str:pk>/', views.upload_clip_view, name='upload-clip-page'),
     path('login/', views.login_view, name='login-page'),
     path('logout/', views.logout_view, name='logout-page'),
+    path('register/', views.registration_view, name='register-page'),
 ]

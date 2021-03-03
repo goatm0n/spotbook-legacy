@@ -7,6 +7,7 @@ class AccountSerializer(serializers.ModelSerializer):
         fields = [
             'email',
             'username',
+            'password',
             'date_joined',
             'last_login',
             'is_admin',
