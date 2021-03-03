@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from accounts.models import Account
 from .serializers import AccountSerializer
+import json
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -27,3 +28,13 @@ def accountDetail(request, pk):
     serializer = AccountSerializer(account, many=False)
 
     return Response(serializer.data)
+
+@api_view(['POST'])
+def account_create_view(request):
+    serializer = AccountSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        #serializer.save(user=request.user)
+        #obj = json.loads(request.data)
+        Account.objects.create_user(email=request.data['email'], username=request.data['username'], password=request.data['password'])
+        return Response(serializer.data, status=201)
+    return Response({}, status=400)

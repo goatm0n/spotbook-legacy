@@ -1,0 +1,22 @@
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+
+    <div id='content'>
+
+        <div id='create-account-form-container'>
+            <label for='email-input' id='email-label'>Email</label>
+            <input id='email-input' name='email-input' type='text' placeholder='email'>
+            <label for='username-input' id='username-label'>Username</label>
+            <input id='username-input' name='username-input' type='text' placeholder='username'>
+            <label for='password-input' id='password-label'>Password</label>
+            <input id='password-input' name='password-input' type='text' placeholder='password'>
+            <input type='button' class='btn btn-success' value='create account' onclick='postAccountForm()'>
+        </div>
+
+        {% load static %}
+        <script src="{% static 'frontend/js/register.js' %}" type='text/javascript'></script>
+
+    </div>
+
+{% endblock content %}

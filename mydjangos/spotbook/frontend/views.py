@@ -36,3 +36,7 @@ def logout_view(request):
         return redirect('/login')
     
     return render(request, 'frontend/logout.html')
+
+def registration_view(request):
+    
+    return render(request, 'frontend/register.html')
