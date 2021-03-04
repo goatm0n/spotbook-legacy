@@ -72,34 +72,52 @@ async function getSpotById(spot_id) {
 
 
 async function spotClip(clip) {
-    const container = document.createElement('div');
-    container.id = 'spot-clip';
+    const myContainer = document.createElement('div');
+    myContainer.id = 'spot-clip';
+    myContainer.setAttribute('class', 'container');
     
+    const clipUserContainer = document.createElement('div');
+    clipUserContainer.id = 'clip-user-container';
+    clipUserContainer.setAttribute('class', 'container');
     const clipUser = document.createElement('p');
     let userObj = await getUserById(clip.user);
     let username = userObj.username;
     clipUser.textContent = username;
-    container.appendChild(clipUser);
+    clipUserContainer.appendChild(clipUser);
+    myContainer.appendChild(clipUserContainer);
 
+    const clipSpotContainer = document.createElement('div');
+    clipSpotContainer.id= 'clip-spot-container';
+    clipSpotContainer.setAttribute('class', 'container');
     const clipSpot = document.createElement('p');
     let spotObj = await getSpotById(clip.spot);
     let spotTitle = spotObj.properties.title
     clipSpot.textContent = spotTitle;
-    container.appendChild(clipSpot);
+    clipSpotContainer.appendChild(clipSpot);
+    myContainer.appendChild(clipSpotContainer);
 
+    const clipImageContainer = document.createElement('div');
+    clipImageContainer.id = 'clip-image-container';
+    clipImageContainer.setAttribute('class', 'container');
     const clipImage = document.createElement('img');
     clipImage.src = clip.image;
     clipImage.alt = 'image';
-    clipImage.width = '500';
-    clipImage.height = '600';
-    container.appendChild(clipImage);
+    clipImage.width = '300';
+    clipImage.height = '400';
+    clipImage.id = 'clip-image';
+    clipImageContainer.appendChild(clipImage);
+    myContainer.appendChild(clipImageContainer);
 
+    const clipTextContentContainer = document.createElement('div');
+    clipTextContentContainer. id = 'clip-text-content-container';
+    clipTextContentContainer.setAttribute('class', 'container');
     const clipTextContent = document.createElement('p');
     clipTextContent.textContent = clip.textContent;
-    container.appendChild(clipTextContent);
+    clipTextContentContainer.appendChild(clipTextContent);
+    myContainer.appendChild(clipTextContentContainer);
 
 
-    return container
+    return myContainer
 
 }
 
