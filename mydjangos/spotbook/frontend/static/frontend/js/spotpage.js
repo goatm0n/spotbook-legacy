@@ -87,6 +87,13 @@ async function spotClip(clip) {
     clipSpot.textContent = spotTitle;
     container.appendChild(clipSpot);
 
+    const clipImage = document.createElement('img');
+    clipImage.src = clip.image;
+    clipImage.alt = 'image';
+    clipImage.width = '500';
+    clipImage.height = '600';
+    container.appendChild(clipImage);
+
     const clipTextContent = document.createElement('p');
     clipTextContent.textContent = clip.textContent;
     container.appendChild(clipTextContent);
