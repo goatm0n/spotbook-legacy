@@ -15,35 +15,6 @@ function getCookie(name) {
 }
 const csrftoken = getCookie('csrftoken');
 
-function postForm(url, data) {
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-type': 'application/json',
-            'X-CSRFToken': csrftoken
-        },
-        body: data,
-    }).then(response => {
-        console.log(response)
-    }).catch(err => {
-        console.log(err)
-    })
-}
-
-function postClipForm() {
-    let clipObj = {
-        'textContent': document.getElementById('text-input').value,
-        'spot': spot_id
-    }
-
-    let clipJson = JSON.stringify(clipObj);
-    let url = 'http://127.0.0.1:8000/clips/api/clip-create/';
-
-    postForm(url, clipJson);
-
-}
-
 function renderClipForm(parentDiv) {
     const parent = document.getElementById(parentDiv);
     const container = document.createElement('div');
@@ -57,12 +28,20 @@ function renderClipForm(parentDiv) {
     textContent.setAttribute('class', 'form-control');
     container.appendChild(textContent);
 
-    const submitButton = document.createElement('button');
-    submitButton.id = 'submit-input';
-    submitButton.setAttribute('class', 'btn btn-success');
-    submitButton.innerHTML = 'Submit';
-    submitButton.addEventListener('click', postClipForm)
-    container.appendChild(submitButton);
+    const imageForm = document.createElement('form');
+    imageForm.id = 'image-form';
+    const image = document.createElement('input');
+    image.id = 'image-input';
+    image.name='image-input';
+    image.type='file';
+    imageForm.appendChild(image);
+    const imageButton = document.createElement('button');
+    imageButton.type = 'submit';
+    imageButton.id = 'image-button';
+    imageButton.innerHTML = 'Submit with image';
+    imageButton.setAttribute('class', 'btn btn-success');
+    imageForm.appendChild(imageButton);
+    container.appendChild(imageForm);
 
     parent.appendChild(container);
 }
