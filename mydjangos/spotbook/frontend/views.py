@@ -16,7 +16,10 @@ def spotpage_view(request, pk):
     context = {'spot_id': pk}
     return render(request, 'frontend/spotpage.html', context)
 
-def upload_clip_view(request, pk):
+def upload_clip_view(request):
+    return render(request, 'frontend/uploadClip.html')
+
+def upload_clip_from_spot_view(request, pk):
     context = {'spot_id': pk}
     return render(request, 'frontend/uploadClip.html', context)
 

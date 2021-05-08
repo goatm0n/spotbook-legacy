@@ -8,5 +8,5 @@ class ClipSerializer(serializers.ModelSerializer):
             'user',
             'spot',
             'textContent',
-            'image'
+            'image',
         ]
