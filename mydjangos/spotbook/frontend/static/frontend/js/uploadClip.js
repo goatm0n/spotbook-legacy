@@ -15,56 +15,61 @@ function getCookie(name) {
 }
 const csrftoken = getCookie('csrftoken');
 
-function postForm(url, data) {
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-type': 'application/json',
-            'X-CSRFToken': csrftoken
-        },
-        body: data,
-    }).then(response => {
-        console.log(response)
-    }).catch(err => {
-        console.log(err)
-    })
-}
-
-function postClipForm() {
-    let clipObj = {
-        'textContent': document.getElementById('text-input').value,
-        'spot': spot_id
-    }
-
-    let clipJson = JSON.stringify(clipObj);
-    let url = 'http://127.0.0.1:8000/clips/api/clip-create/';
-
-    postForm(url, clipJson);
-
-}
-
-function renderClipForm(parentDiv) {
+function renderClipForm(parentDiv){
+    // create form container div
     const parent = document.getElementById(parentDiv);
     const container = document.createElement('div');
     container.id = 'clip-form-container';
-
-    const textContent = document.createElement('input');
-    textContent.type = 'text';
-    textContent.id = 'text-input';
-    textContent.name = 'text-input';
-    textContent.placeholder = 'text-content'
-    textContent.setAttribute('class', 'form-control');
-    container.appendChild(textContent);
-
-    const submitButton = document.createElement('button');
-    submitButton.id = 'submit-input';
-    submitButton.setAttribute('class', 'btn btn-success');
-    submitButton.innerHTML = 'Submit';
-    submitButton.addEventListener('click', postClipForm)
-    container.appendChild(submitButton);
-
     parent.appendChild(container);
+
+    // create form
+    const clipForm = document.createElement('form');
+    clipForm.id = 'clip-form';
+    clipForm.action = 'http://127.0.0.1:8000/clips/api/clip-create/';
+    clipForm.method = 'POST';
+    clipForm.enctype = 'multipart/form-data'
+    container.appendChild(clipForm);
+
+    // spot
+    const spotInput = document.createElement('input');
+    spotInput.id = 'spot-input';
+    spotInput.name = 'spot';
+    spotInput.type = 'text';
+    spotInput.placeholder = 'spot';
+    if (spot_id != '') {
+        spotInput.value = spot_id;
+        spotInput.type = 'hidden';
+    }
+    clipForm.appendChild(spotInput);
+
+    // text content
+    const textInput = document.createElement('input');
+    textInput.id = 'text-input';
+    textInput.type = 'text';
+    textInput.name = 'textContent'
+    textInput.placeholder = 'textContent';
+    clipForm.appendChild(textInput);
+
+    // image 
+    const imageInput = document.createElement('input');
+    imageInput.id = 'image-input';
+    imageInput.name = 'image';
+    imageInput.type = 'file';
+    clipForm.append(imageInput);
+
+    // csrf token
+    const csrfInput = document.createElement('input');
+    csrfInput.type = 'hidden';
+    csrfInput.name = 'csrfmiddlewaretoken';
+    csrfInput.value = csrftoken;
+    clipForm.appendChild(csrfInput);
+
+    // submit
+    const submitButton = document.createElement('input');
+    submitButton.type = 'submit';
+    submitButton.value = 'OK';
+    clipForm.appendChild(submitButton);
+
 }
 
 renderClipForm('upload-spot-clip');

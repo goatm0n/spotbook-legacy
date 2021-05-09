@@ -8,6 +8,7 @@ class Clip(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     spot = models.ForeignKey(Spot, on_delete=models.CASCADE)
     textContent = models.TextField(blank=True, null=True)
+    image = models.ImageField(blank=True, null=True, upload_to='images/')
 
     def __str__(self):
         return self.spot.title
