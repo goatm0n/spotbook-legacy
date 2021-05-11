@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import Context
 from django.contrib.auth import login, logout
@@ -43,3 +44,12 @@ def logout_view(request):
 def registration_view(request):
     
     return render(request, 'frontend/register.html')
+
+def profile_view(request):
+
+    if request.user.is_authenticated:
+        
+        return render(request, 'frontend/profile.html')
+
+    else:
+        return redirect('http://127.0.0.1:8000/spotbook/login/')
