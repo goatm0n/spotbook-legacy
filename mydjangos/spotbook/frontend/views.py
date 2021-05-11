@@ -43,3 +43,13 @@ def logout_view(request):
 def registration_view(request):
     
     return render(request, 'frontend/register.html')
+
+def profile_view(request):
+
+    if request.user.is_authenticated:
+        context = {'username': request.user.username}
+        
+        return render(request, 'frontend/profile.html', context)
+
+    else:
+        return redirect('http://127.0.0.1:8000/spotbook/login/')
