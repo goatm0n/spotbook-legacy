@@ -3,6 +3,8 @@ from django.template import Context
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 
+from profiles.forms import ProfileForm
+
 def home_view(request):
     return render(request, 'frontend/home.html')
 
@@ -53,3 +55,29 @@ def profile_view(request):
 
     else:
         return redirect('http://127.0.0.1:8000/spotbook/login/')
+
+def profile_detail_view(request, username):
+    context = {'username': username}
+
+    return render(request, 'frontend/profile-detail.html', context)
+
+def profile_update_view(request, *args, **kwargs):
+    if not request.user.is_authenticated:
+        return redirect('http://127.0.0.1:8000/spotbook/login/')
+    
+    user = request.user
+    my_profile = user.profile
+    form = ProfileForm(request.POST or None, instance=my_profile)
+    
+    if form.is_valid():
+        profile_obj = form.save(commit=False)
+        profile_obj.save()
+
+    context = {
+        'form': form,
+        'btn_label': 'Save',
+        'title': 'Update Profile'
+    }
+
+    return render(request, 'frontend/profile-form.html', context)
+    
