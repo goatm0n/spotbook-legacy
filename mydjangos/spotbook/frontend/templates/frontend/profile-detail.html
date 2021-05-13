@@ -1,5 +1,16 @@
 {% extends 'frontend/base.html' %}
 
+{% block css %}
+    {{ block.super }}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'frontend/css/profile-detail.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+{% endblock css %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+{% endblock js %}
 
 {% block content %}
 
@@ -10,7 +21,11 @@
         <div id='profile-picture-container'></div>
         <div id='bio-container'></div>
     </div>
-    <div id='spots-container'></div>
+    <div id='spots-container'>
+        <div id='map-container'>
+            <div id='mapid'></div>
+        </div>
+    </div>
     <div id='clips-container'></div>
 </div>
 
@@ -21,7 +36,12 @@
 {% load static %}
 <script src="{% static 'frontend/js/renderProfile.js' %}" type='text/javascript'></script>
 
-    
+{% load static %}
+<script src="{% static 'frontend/js/renderSpots.js' %}" type='text/javascript'></script>
+
+{% load static %}
+<script src="{% static 'frontend/js/renderClips.js' %}" type='text/javascript'></script>
+
 {% endblock content %}
 
 
