@@ -3,11 +3,24 @@
 
 {% block content %}
 
-{{ username }}
+<div id='content'>
+    <div id='profile-container'>
+        <div id='username-container'></div>
+        <div id='full-name-container'></div>
+        <div id='profile-picture-container'></div>
+        <div id='bio-container'></div>
+    </div>
+    <div id='spots-container'></div>
+    <div id='clips-container'></div>
+</div>
 
 <script>
-    var username = "{{ username }}"
+    var _username = "{{ username }}"
 </script>
+
+{% load static %}
+<script src="{% static 'frontend/js/renderProfile.js' %}" type='text/javascript'></script>
+
     
 {% endblock content %}
 
