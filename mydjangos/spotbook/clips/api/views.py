@@ -14,7 +14,7 @@ def apiOverview(request):
         'Update': '/clip-update/<str:pk>/',
         'Delete': '/clip-delete/<str:pk>/',
         'List by spot': '/clip-spot/<str:pk>/',
-        'List by user': '/clip-user/<str:pk>/',
+        'List by user': '/clip-user/<str:username>/',
     }
     return Response(api_urls)
 
@@ -44,3 +44,10 @@ def clip_create_view(request):
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
     return Response({}, status=400)
+
+@api_view(['GET'])
+def clip_user_view(request, username):
+    qs = Clip.objects.filter(user__username=username)
+    serializer = ClipSerializer(qs, many=True)
+
+    return Response(serializer.data)

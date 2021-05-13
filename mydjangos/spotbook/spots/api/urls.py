@@ -6,4 +6,6 @@ urlpatterns = [
     path('spot-list/', views.spotList, name='api-spot-list'),
     path('spot-detail/<str:pk>/', views.spotDetail, name='api-spot-detail'),
     path('spot-create/', views.spot_create, name='api-spot-create'),
+    path('spot-user/<str:username>/', views.spot_user_view, name='api-spot-user'),
+    
 ]

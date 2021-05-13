@@ -13,6 +13,7 @@ def apiOverview(request):
         'Create': '/spot-create/',
         'Update': '/spot-update/<str:pk>/',
         'Delete': '/spot-delete/<str:pk>/',
+        'User': '/spot-user/<str:username>/'
     }
     return Response(api_urls)
 
@@ -38,3 +39,11 @@ def spot_create(request):
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
     return Response({}, status=400)
+
+@api_view(['GET'])
+def spot_user_view(request, username):
+    # returns qs of spots uploaded by user
+    qs = Spot.objects.filter(user__username=username)
+    serializer = SpotSerializer(qs, many=True)
+
+    return Response(serializer.data)

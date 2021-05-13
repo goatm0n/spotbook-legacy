@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -12,4 +12,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout-page'),
     path('register/', views.registration_view, name='register-page'),
     path('profile/', views.profile_view, name='profile-page'),
+    path('profile/<str:username>/', views.profile_detail_view, name='profile-detail-page'),
+    path('profile-update/', views.profile_update_view, name='profile-update-page'),
+
 ]
