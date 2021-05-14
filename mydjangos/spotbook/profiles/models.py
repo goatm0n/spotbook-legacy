@@ -10,6 +10,9 @@ class Profile(models.Model):
     profile_picture = models.ImageField(blank=True, null=True, upload_to='images/')
     bio = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return(self.user.username)
+
 def user_did_save(sender, instance, created, *args, **kwargs):
     if created:
         Profile.objects.get_or_create(user=instance)
