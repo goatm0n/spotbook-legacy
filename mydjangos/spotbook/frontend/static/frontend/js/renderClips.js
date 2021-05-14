@@ -36,10 +36,11 @@ async function spotClip(clip) {
     const clipUserContainer = document.createElement('div');
     clipUserContainer.id = 'clip-user-container';
     clipUserContainer.setAttribute('class', 'container');
-    const clipUser = document.createElement('p');
+    const clipUser = document.createElement('a');
     let userObj = await getUserById(clip.user);
     let username = userObj.username;
     clipUser.textContent = username;
+    clipUser.setAttribute('href', `http://127.0.0.1:8000/spotbook/profile/${username}`);
     clipUserContainer.appendChild(clipUser);
     myContainer.appendChild(clipUserContainer);
 

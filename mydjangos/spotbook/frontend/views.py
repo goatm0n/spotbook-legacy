@@ -67,7 +67,7 @@ def profile_update_view(request, *args, **kwargs):
     
     user = request.user
     my_profile = user.profile
-    form = ProfileForm(request.POST or None, instance=my_profile)
+    form = ProfileForm(request.POST or None, request.FILES or None, instance=my_profile)
     
     if form.is_valid():
         profile_obj = form.save(commit=False)

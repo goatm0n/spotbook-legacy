@@ -64,7 +64,13 @@
             </div>
 
             <div class='row'>
+                
+                {% block precontent %}{% endblock precontent %}
+                    
                 {% block content%}{% endblock content %}
+
+                {% block postcontent %}{% endblock postcontent %}
+                    
             </div>
 
 
