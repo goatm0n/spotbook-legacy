@@ -117,6 +117,35 @@ async function spotClip(clip) {
     clipTextContentContainer.appendChild(clipTextContent);
     myContainer.appendChild(clipTextContentContainer);
 
+    const clipLikeButtonContainer = document.createElement('div');
+    clipLikeButtonContainer.id = 'clip-like-button-container';
+    clipLikeButtonContainer.setAttribute('class', 'container');
+    const clipLikeForm = document.createElement('form');
+    clipLikeForm.action = `http://127.0.0.1:8000/clips/api/clip-like/${clip.id}/`;
+    clipLikeForm.method = 'POST';
+    const clipLikeButton = document.createElement('button');
+    clipLikeButton.id = 'clip-like-button';
+    clipLikeButton.type = 'submit';
+    clipLikeButton.setAttribute('class', 'btn btn-secondary');
+    clipLikeButton.textContent = 'Like/ unlike';
+    const csrfInput = document.createElement('input');
+    csrfInput.type = 'hidden';
+    csrfInput.name = 'csrfmiddlewaretoken';
+    csrfInput.value = csrftoken;
+    clipLikeForm.appendChild(csrfInput);
+    clipLikeForm.appendChild(clipLikeButton);
+    clipLikeButtonContainer.appendChild(clipLikeForm);
+    myContainer.appendChild(clipLikeButtonContainer);
+
+    const clipLikeCounterContainer = document.createElement('div');
+    clipLikeCounterContainer.id = 'clip-like-counter-container';
+    clipLikeCounterContainer.setAttribute('class', 'container');
+    const clipLikeCounter = document.createElement('p');
+    clipLikeCounter.id ='clip-like-counter';
+    clipLikeCounter.textContent = `${clip.likes.length}`;
+    clipLikeCounterContainer.appendChild(clipLikeCounter);
+    myContainer.appendChild(clipLikeCounterContainer);
+
 
     return myContainer
 
