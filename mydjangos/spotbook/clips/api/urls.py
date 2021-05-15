@@ -8,5 +8,6 @@ urlpatterns = [
     path('clip-list/', views.clip_list_view, name='clip-list-view'),
     path('clip-detail/<str:pk>/', views.clip_detail_view, name='clip-detail-view'),
     path('clip-user/<str:username>/', views.clip_user_view, name='clip-user-view'),
+    path('clip-like/<str:clip_id>/', views.clip_like_toggle_view, name='clip-like-toggle-view'),
     
 ]

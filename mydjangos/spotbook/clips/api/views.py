@@ -51,3 +51,20 @@ def clip_user_view(request, username):
     serializer = ClipSerializer(qs, many=True)
 
     return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def clip_like_toggle_view(request, clip_id):
+    qs = Clip.objects.filter(id=clip_id)
+    
+    if not qs.exists():
+        return Response({}, status=404)
+
+    obj = qs.first()
+    
+    if request.user in obj.likes.all():
+        obj.likes.remove(request.user)
+    else:
+        obj.likes.add(request.user)
+
+    return Response({}, status=201)
