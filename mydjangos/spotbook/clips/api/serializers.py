@@ -9,4 +9,6 @@ class ClipSerializer(serializers.ModelSerializer):
             'spot',
             'textContent',
             'image',
+            'id',
+            'likes',
         ]
