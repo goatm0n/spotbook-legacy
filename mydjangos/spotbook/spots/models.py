@@ -3,6 +3,12 @@ from django.conf import settings
 
 User = settings.AUTH_USER_MODEL
 
+class SpotLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    spot = models.ForeignKey("Spot", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+
 
 class Spot(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
@@ -13,14 +19,15 @@ class Spot(models.Model):
     SKATEPARK = 'Skatepark'
     STREET = 'Street'
     DIY = 'D.I.Y'
-
     SPOTTYPES = [
         (SKATEPARK, ('Skatepark')),
         (STREET, ('Street')),
         (DIY, ('D.I.Y')),
     ]
-
     spotType = models.CharField(max_length=32, choices=SPOTTYPES)
+    
+    likes = models.ManyToManyField(User, related_name="spot_user", blank=True, through=SpotLike)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title

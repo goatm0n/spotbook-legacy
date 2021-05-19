@@ -15,6 +15,7 @@ class Clip(models.Model):
     textContent = models.TextField(blank=True, null=True)
     image = models.ImageField(blank=True, null=True, upload_to='images/')
     likes = models.ManyToManyField(User, related_name="clip_user", blank=True, through=ClipLike)
-
+    timestamp = models.DateTimeField(auto_now_add=True)
+    
     def __str__(self):
         return self.spot.title

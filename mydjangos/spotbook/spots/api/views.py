@@ -13,8 +13,10 @@ def apiOverview(request):
         'Create': '/spot-create/',
         'Update': '/spot-update/<str:pk>/',
         'Delete': '/spot-delete/<str:pk>/',
-        'User': '/spot-user/<str:username>/'
+        'User': '/spot-user/<str:username>/',
+        'Like-toggle': '/spot-like/<str:spot_id>/',
     }
+    
     return Response(api_urls)
 
 @api_view(['GET'])
@@ -47,3 +49,21 @@ def spot_user_view(request, username):
     serializer = SpotSerializer(qs, many=True)
 
     return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def spot_like_toggle_view(request, spot_id):
+    qs = Spot.objects.filter(id=spot_id)
+    
+    if not qs.exists():
+        return Response({}, status=404)
+
+    obj = qs.first()
+    
+    if request.user in obj.likes.all():
+        obj.likes.remove(request.user)
+    else:
+        obj.likes.add(request.user)
+
+    return Response({}, status=201)
+
