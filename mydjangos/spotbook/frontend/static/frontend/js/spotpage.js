@@ -1,3 +1,19 @@
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 async function getSpotDetail() {
     let url = `http://127.0.0.1:8000/spots/api/spot-detail/${spot_id}`;
     try {
@@ -18,37 +34,6 @@ async function getSpotClipList() {
         console.log(error);
     }
 }
-
-
-async function renderSpotDetail() {
-    let spot = await getSpotDetail();
-    const spotDetailDiv = document.getElementById('spot-details');
-
-    const spotTitleDiv = document.createElement('div');
-    spotTitleDiv.id = 'spot-title';
-    const spotTitle = document.createElement('p');
-    spotTitle.textContent = spot.properties.title;
-    spotTitleDiv.appendChild(spotTitle);
-    spotDetailDiv.appendChild(spotTitleDiv);
-
-    const spotDescriptionDiv = document.createElement('div');
-    spotDescriptionDiv.id = 'spot-description';
-    const spotDescription = document.createElement('p');
-    spotDescription.textContent = spot.properties.description;
-    spotDescriptionDiv.appendChild(spotDescription);
-    spotDetailDiv.appendChild(spotDescriptionDiv);
-
-    const spotTypeDiv = document.createElement('div');
-    spotTypeDiv.id = 'spot-type';
-    const spotType = document.createElement('p');
-    spotType.textContent = spot.properties.spotType;
-    spotTypeDiv.appendChild(spotType);
-    spotDetailDiv.appendChild(spotTypeDiv);
-
-
-}
-
-renderSpotDetail();
 
 async function getUserById(user_id) {
     let url = `http://127.0.0.1:8000/accounts/api/account-detail/${user_id}`
