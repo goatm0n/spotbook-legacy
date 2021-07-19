@@ -52,6 +52,7 @@ def spot_user_view(request, username):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
+### GENERAL LIKE TOGGLE VIEW ###
 def spot_like_toggle_view(request, spot_id):
     qs = Spot.objects.filter(id=spot_id)
     

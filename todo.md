@@ -16,6 +16,9 @@
         -> By popularity? e.g follow count
         -> By quantity of content?
         -> By quality of conent? e.g likes
+    -> Likes
+        -> fix redirect
+    -> Following
 
 2. Users
     -> Register
@@ -26,15 +29,16 @@
         -> Spots
         -> Clips
         -> Text
-    -> Follow 
+    -> Following
 
 3. Clips
     -> text?
     -> photos
     -> videos
     -> instagram
-    -> like clips
     -> share clips
+     -> Likes
+        -> fix redirect
 
 3. Spotmap
     -> Interactive map
@@ -42,6 +46,7 @@
         -> Reduce spot clutter
             -> Show most popular first
                 -> Zoom level controls spots shown
+    ->spotmarkers
 
 4. Spotpage
     -> view spot details
@@ -53,3 +58,5 @@
     -> newsfeed
         -> content from followed spots
         -> content from followed users
+
+    

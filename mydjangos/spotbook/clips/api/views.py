@@ -68,3 +68,4 @@ def clip_like_toggle_view(request, clip_id):
         obj.likes.add(request.user)
 
     return Response({}, status=201)
+
