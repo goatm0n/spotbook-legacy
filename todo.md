@@ -30,6 +30,7 @@
         -> Clips
         -> Text
     -> Following
+        -> follow button
 
 3. Clips
     -> text?
