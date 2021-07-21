@@ -1,6 +1,7 @@
 from django.test import TestCase
 
 from rest_framework.test import APIClient
+from rest_framework.authtoken.models import Token
 
 # Create your tests here.
 from django.contrib.auth import get_user_model
@@ -34,6 +35,7 @@ class ProfileTestCase(TestCase):
 
     def test_follow_api_endpoint(self):
         client = self.get_client()
+        client.force_authenticate(user=self.user)
         response = client.post(
             f"/profiles/api/{self.user_b.username}/follow",
             {"action": "follow"}
@@ -49,6 +51,7 @@ class ProfileTestCase(TestCase):
         first.profile.followers.add(second)
 
         client = self.get_client()
+        client.force_authenticate(user=self.user)
         response = client.post(
             f"/profiles/api/{self.user_b.username}/follow",
             {"action": "unfollow"}
