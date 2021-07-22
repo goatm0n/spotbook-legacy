@@ -51,4 +51,6 @@ def user_follow_view(request, username, *args, **kwargs):
 
     current_followers_qs = profile.followers.all()
 
+    print(data)
+
     return Response({'count': current_followers_qs.count()}, status=200)

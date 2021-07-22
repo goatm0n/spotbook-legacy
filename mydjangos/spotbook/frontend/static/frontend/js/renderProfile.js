@@ -1,3 +1,4 @@
+
 async function fetchProfileObj() {
     let url = `http://127.0.0.1:8000/profiles/api/profile-detail/${_username}`;
     try {
@@ -36,6 +37,15 @@ function renderBio(bio) {
     container.appendChild(bioP);
 }
 
+function renderFollowButton() {
+    const targetDiv = 'follow-button-container';
+    const targetUser = _username
+
+    let button = new FollowProfileButton(targetDiv, targetUser);
+    button.renderButton();
+
+}
+
 async function renderProfile() {
     let profileObj = await fetchProfileObj();
     const fullName = profileObj.full_name;
@@ -46,6 +56,7 @@ async function renderProfile() {
     renderFullName(fullName);
     renderProfilePicture(profilePic);
     renderBio(bio);
+    renderFollowButton();
 }
 
 renderProfile();
