@@ -10,10 +10,28 @@
 
         <script>
             class FollowProfileButton {
-    constructor(targetDiv, targetUser) {
+    constructor(targetDiv, targetUser, action) {
         this.targetDiv = targetDiv;
         this.targetUser = targetUser;
+        this.action = action;
     }
+
+    // check if user follows target
+    async fetchDoesUserFollowTarget() {
+        let url = `http://127.0.0.1.8000/profiles/api/does-user-follow/${this.targetUser}/`;
+        try {
+            let response = await(fetch(url));
+            return await response.json();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    doesUserFollowTarget() {
+        let response = this.fetchDoesUserFollowTarget();
+        console.log(response);
+    }
+
 
     // getter 
     get csrfCookie() {
@@ -44,7 +62,6 @@
     //method
     buildButton() {
         const csrftoken = this.csrfCookie;
-        console.log(csrftoken);
 
         const buttonDiv = document.createElement('div');
         buttonDiv.id = 'follow-button-div';
@@ -61,12 +78,12 @@
         button.id = 'profile-follow-button';
         button.type = 'submit';
         button.setAttribute('class', 'btn btn-secondary');
-        button.textContent = 'Follow';
+        button.textContent = this.action;
 
-        const action = document.createElement('input');
-        action.type = 'hidden';
-        action.name = 'action';
-        action.value = 'follow'
+        const formAction = document.createElement('input');
+        formAction.type = 'hidden';
+        formAction.name = 'action';
+        formAction.value = this.action;
 
         const inputElem = document.createElement('input');
         inputElem.type = 'hidden';
@@ -74,7 +91,7 @@
         inputElem.value = csrftoken;
 
         form.appendChild(button);
-        form.appendChild(action);
+        form.appendChild(formAction);
         form.appendChild(inputElem);
         buttonDiv.appendChild(form);
 
@@ -91,8 +108,9 @@
         </script>
 
         <script>
-            let followButton = new FollowProfileButton(targetDiv='follow-profile-button-container', targetUser);
+            let followButton = new FollowProfileButton(targetDiv='follow-profile-button-container', targetUser, action='unfollow');
             followButton.renderButton();
+            followButton.doesUserFollowTarget();
         </script>
     </body>
 </html>

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from profiles.models import Profile
 from django.http.response import Http404
 from django.contrib.auth import get_user_model
-from .serializers import ProfileSerializer
+from .serializers import ProfileSerializer, ProfileFollowersSerializer
 
 User = get_user_model()
 
@@ -51,6 +51,45 @@ def user_follow_view(request, username, *args, **kwargs):
 
     current_followers_qs = profile.followers.all()
 
-    print(data)
-
     return Response({'count': current_followers_qs.count()}, status=200)
+
+@api_view(['GET'])
+def user_followers(request, username):
+    user_qs = User.objects.filter(username=username)
+    if not user_qs.exists():
+        return Response({}, status=404)
+
+    user_ = user_qs.first()
+    profile_ = user_.profile
+    
+    followers_qs = profile_.followers.all()
+    followers = []
+    for profile in followers_qs:
+        username_ = profile.username
+        followers.append(username_)
+
+    return Response({'followers': followers})
+
+@api_view(['GET'])
+def does_user_follow(request, targetUsername, *args, **kwargs):
+    user = request.user
+    username = user.username
+
+    user_qs = User.objects.filter(username=targetUsername)
+    if not user_qs.exists():
+        return Response({}, status=404)
+
+    targetUser = user_qs.first()
+    targetProfile = targetUser.profile
+
+    target_profile_followers_qs = targetProfile.followers.all()
+
+    qs = target_profile_followers_qs.filter(username=username)
+    if not qs.exists():
+        return Response({'data': False}, status=200)
+    elif qs.exists():
+        return Response({'data': True}, status=200)
+    else:
+        return Response({}, status=404)
+
+

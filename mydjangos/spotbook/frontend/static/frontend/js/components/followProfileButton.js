@@ -1,7 +1,8 @@
 class FollowProfileButton {
-    constructor(targetDiv, targetUser) {
+    constructor(targetDiv, targetUser, action) {
         this.targetDiv = targetDiv;
         this.targetUser = targetUser;
+        this.action = action
     }
 
     // getter 
@@ -45,13 +46,13 @@ class FollowProfileButton {
             'Content-type': 'application/json',
             'X-CSRFToken': csrftoken
         }
-        form.data = {'action': 'follow'};
+        form.data = {'action': this.action};
 
         const button = document.createElement('button');
         button.id = 'profile-follow-button';
         button.type = 'submit';
         button.setAttribute('class', 'btn btn-secondary');
-        button.textContent = 'Follow';
+        button.textContent = this.action;
 
         form.appendChild(button);
         buttonDiv.appendChild(form)

@@ -10,3 +10,8 @@ class ProfileSerializer(serializers.ModelSerializer):
             'profile_picture',
             'bio',
         ]
+
+class ProfileFollowersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['followers']
