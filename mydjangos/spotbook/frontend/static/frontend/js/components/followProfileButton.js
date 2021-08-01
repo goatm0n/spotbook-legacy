@@ -1,12 +1,28 @@
 class FollowProfileButton {
-    constructor(targetDiv, targetUser, action) {
+    constructor(targetDiv, targetUser) {
         this.targetDiv = targetDiv;
         this.targetUser = targetUser;
-        this.action = action
+    }
+
+    // check if user follows target
+    async fetchDoesUserFollowTarget() {
+        let url = `http://127.0.0.1:8000/profiles/api/does-user-follow/${this.targetUser}/`;
+        try {
+            let response = await(fetch(url));
+            return await response.json();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // getter
+    async doesUserFollowTarget() {
+        var result = await this.fetchDoesUserFollowTarget();
+        return result.data;
     }
 
     // getter 
-    get csrfCoookie() {
+    get csrfCookie() {
         return this.getCookie('csrftoken');
     }
 
@@ -28,41 +44,60 @@ class FollowProfileButton {
     }
 
     // getter
-    get button() {
-        return this.buildButton();
+    async button() {
+        var follows = await this.doesUserFollowTarget();
+        if (follows) {
+            return this.buildButton('unfollow');
+        } else {
+            return this.buildButton('follow');
+        }  
     }
+
     //method
-    buildButton() {
-        const csrftoken = this.csrfCoookie;
+    buildButton(action) {
+        const csrftoken = this.csrfCookie;
 
         const buttonDiv = document.createElement('div');
         buttonDiv.id = 'follow-button-div';
 
         const form = document.createElement('form');
-        form.action = `http://127.0.0.1:8000/profiles/api/${this.targetUser.username}/follow`;
+        form.action = `http://127.0.0.1:8000/profiles/api/${this.targetUser}/follow`;
         form.method = 'POST';
         form.headers = {
             'Accept': 'application/json, text/plain, */*',
             'Content-type': 'application/json',
-            'X-CSRFToken': csrftoken
         }
-        form.data = {'action': this.action};
 
         const button = document.createElement('button');
         button.id = 'profile-follow-button';
         button.type = 'submit';
         button.setAttribute('class', 'btn btn-secondary');
-        button.textContent = this.action;
+        button.textContent = action;
+
+        const formAction = document.createElement('input');
+        formAction.type = 'hidden';
+        formAction.name = 'action';
+        formAction.value = action;
+
+        const inputElem = document.createElement('input');
+        inputElem.type = 'hidden';
+        inputElem.name = 'csrfmiddlewaretoken';
+        inputElem.value = csrftoken;
 
         form.appendChild(button);
-        buttonDiv.appendChild(form)
+        form.appendChild(formAction);
+        form.appendChild(inputElem);
+        buttonDiv.appendChild(form);
+
 
         return buttonDiv;
     }
 
-    renderButton() {
-        const followButton = this.button;
+    async renderButton() {
+        const followButton = await this.button();
         const target = document.getElementById(this.targetDiv);
         target.appendChild(followButton);
     }
+
+
 }
