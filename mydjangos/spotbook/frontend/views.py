@@ -80,4 +80,10 @@ def profile_update_view(request, *args, **kwargs):
     }
 
     return render(request, 'frontend/profile-form.html', context)
+
+
+def test_view(request, username):
+    context = {'username': username}
+    
+    return render(request, 'frontend/test.html', context)
     

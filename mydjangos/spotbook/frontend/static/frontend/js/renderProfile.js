@@ -1,3 +1,4 @@
+
 async function fetchProfileObj() {
     let url = `http://127.0.0.1:8000/profiles/api/profile-detail/${_username}`;
     try {

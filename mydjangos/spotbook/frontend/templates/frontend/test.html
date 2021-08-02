@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <div id='follow-profile-button-container'></div>
+
+        {% load static  %}
+        <script src="{% static 'frontend/js/components/FollowProfileButton.js' %}"></script>
+
+        <script>
+            var targetUser = "{{ username }}"
+            let followButton = new FollowProfileButton(targetDiv='follow-profile-button-container', targetUser);
+            followButton.renderButton();
+        </script>
+        
+    </body>
+</html>

@@ -16,10 +16,8 @@
 
 <div id='content'>
     <div id='profile-container'>
-        <div id='username-container'></div>
-        <div id='full-name-container'></div>
-        <div id='profile-picture-container'></div>
-        <div id='bio-container'></div>
+        <div id='profile-detail-container'></div>
+        <div id='follow-button-container'></div>
     </div>
     <div id='spots-container'>
         <div id='map-container'>
@@ -29,19 +27,30 @@
     <div id='clips-container'></div>
 </div>
 
+{% load static  %}
+<script src="{% static 'frontend/js/components/followProfileButton.js' %}"></script>
+
 <script>
-    var _username = "{{ username }}"
+    var _username = "{{ username }}";
+    let followButton = new FollowProfileButton(targetDiv='follow-button-container', targetUser=_username);
+    followButton.renderButton();
 </script>
 
 {% load static %}
-<script src="{% static 'frontend/js/renderProfile.js' %}" type='text/javascript'></script>
+<script src="{% static 'frontend/js/components/profileDetail.js' %}"></script>
 
+<script>
+    let profileDetaiObj = new ProfileDetail(targetDiv='profile-detail-container', targetUser=_username);
+    profileDetaiObj.render();
+</script>
+
+<!--
 {% load static %}
 <script src="{% static 'frontend/js/renderSpots.js' %}" type='text/javascript'></script>
 
 {% load static %}
 <script src="{% static 'frontend/js/renderClips.js' %}" type='text/javascript'></script>
-
+ -->
 {% endblock content %}
 
 
