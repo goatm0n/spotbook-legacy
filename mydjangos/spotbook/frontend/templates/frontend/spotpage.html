@@ -10,6 +10,7 @@
 
     <div id='content'>
         <div id='spot-details'></div>
+        <div id='follow-button-container'></div>
         <div id='upload-spot-clip'></div>
         <div id='spot-clips'></div>
     </div>
@@ -17,6 +18,15 @@
     <script type="text/javascript">
         var spot_id = "{{ spot_id }}"
     </script>
+
+    {% load static  %}
+    <script src="{% static 'frontend/js/components/spotFollowButton.js' %}"></script>
+
+    <script>
+        let followButton = new SpotFollowButton(targetDiv='follow-button-container', spot_id=spot_id);
+        followButton.renderButton();
+    </script>
+
 
     {% load static %}
     <script src="{% static 'frontend/js/spotpage.js' %}" type='text/javascript'></script>
