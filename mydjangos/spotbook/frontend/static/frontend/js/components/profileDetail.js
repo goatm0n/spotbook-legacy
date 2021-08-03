@@ -73,9 +73,6 @@ class ProfileDetail {
 
     async render() {
         let profileObj = await this.fetchProfileObj();
-        console.log(profileObj);
         this.build(profileObj);
-        
-        
     }
 }

@@ -9,6 +9,11 @@ class SpotLike(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
 
+class SpotFollowerRelation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    spot = models.ForeignKey('Spot', on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
 
 class Spot(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
@@ -28,6 +33,13 @@ class Spot(models.Model):
     
     likes = models.ManyToManyField(User, related_name="spot_user", blank=True, through=SpotLike)
     timestamp = models.DateTimeField(auto_now_add=True)
+    followers = models.ManyToManyField(User, related_name='following_spots', blank=True)
+
+    '''
+    spot_obj = Spot.objects.first()
+    spot_obj.followers.all() -> All users follwing this spot
+    user.following.all() -> All spots I follow
+    '''
 
     def __str__(self):
         return self.title
