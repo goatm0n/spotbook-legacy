@@ -71,6 +71,43 @@ def spot_like_toggle_view(request, spot_id):
 
     return Response({}, status=201)
 
+def spot_like_action_view(request, spot_id):
+    user = request.user
+    qs = Spot.objects.filter(id=spot_id)
+    if not qs.exists():
+        return Response({}, status=404)
+    
+    spot = qs.first()
+    data = request.data or {}
+    action = data.get('action')
+
+    if action == 'like':
+        spot.likes.add(user)
+    elif action =='unlike':
+        spot.likes.remove(user)
+    else:
+        pass
+
+    likes_qs = spot.likes.all()
+
+    return Response({"count": likes_qs.count()}, status=201)
+
+@api_view(['GET'])
+def does_user_like(request, spot_id, *args, **kwargs):
+    qs = Spot.objects.filter(id=spot_id)
+    if not qs.exists():
+        return Response({}, status=404)
+
+    user = request.user
+    spot = qs.first()
+
+    if user in spot.likes.all():
+        return Response({"data": True}, status=200)
+    elif user not in spot.likes.all():
+        return Response({"data": False}, status=200)
+    else:
+        return Response({}, status=404)
+
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def spot_follow_view(request, spot_id, *args, **kwargs):
