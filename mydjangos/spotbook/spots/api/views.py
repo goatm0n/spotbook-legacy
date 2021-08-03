@@ -4,6 +4,9 @@ from rest_framework.response import Response
 from spots.models import Spot
 from .serializers import SpotSerializer
 from rest_framework import status
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -67,4 +70,64 @@ def spot_like_toggle_view(request, spot_id):
         obj.likes.add(request.user)
 
     return Response({}, status=201)
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def spot_follow_view(request, spot_id, *args, **kwargs):
+    me = request.user
+    spot_qs = Spot.objects.filter(id=spot_id)
+    if not spot_qs.exists():
+        return Response({}, status=404)
+
+    spot = spot_qs.first()
+
+    data = request.data or {}
+    action = data.get('action')
+
+    if action == 'follow':
+        spot.followers.add(me)
+    elif action == 'unfollow':
+        spot.followers.remove(me)
+    else:
+        pass
+
+    followers_qs = spot.followers.all()
+
+    return Response({'count': followers_qs.count()}, status=200)
+
+
+@api_view(['GET'])
+def spot_followers(request, spot_id):
+    spot_qs = Spot.objects.filter(id=spot_id)
+    if not spot_qs.exists():
+        return Response({}, status=404)
+
+    spot = spot_qs.first()
+    
+    followers_qs = spot.followers.all()
+    followers = []
+    for user in followers_qs:
+        username = user.username
+        followers.append(username)
+
+    return Response({'followers': followers})
+
+@api_view(['GET'])
+def does_user_follow(request, spot_id):
+    user = request.user
+    username = user.username
+    spot_qs = Spot.objects.filter(id=spot_id)
+    if not spot_qs.exists():
+        return Response({}, status=404)
+
+    spot = spot_qs.first()
+    spot_followers_qs = spot.followers.all()
+
+    qs = spot_followers_qs.filter(username=username)
+    if not qs.exists():
+        return Response({"data": False}, status=200)
+    elif qs.exists():
+        return Response({"data": True}, status=200)
+    else:
+        return Response({}, status=404)
 
