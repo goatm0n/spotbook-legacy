@@ -2,14 +2,14 @@
 <html>
     <head></head>
     <body>
-        <div id='follow-spot-button-container'></div>
+        <div id='like-spot-button-container'></div>
 
         {% load static  %}
-        <script src="{% static 'frontend/js/components/spotFollowButton.js' %}"></script>
+        <script src="{% static 'frontend/js/components/SpotLikeButtonDev.js' %}"></script>
 
         <script>
             var spot_id = "{{ spot_id }}"
-            let followButton = new SpotFollowButton(targetDiv='follow-spot-button-container', spot_id=spot_id);
+            let followButton = new SpotLikeButton(targetDiv='like-spot-button-container', spot_id=spot_id);
             followButton.renderButton();
         </script>
         

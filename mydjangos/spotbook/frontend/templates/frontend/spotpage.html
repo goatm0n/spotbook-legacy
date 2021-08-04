@@ -11,6 +11,7 @@
     <div id='content'>
         <div id='spot-details'></div>
         <div id='follow-button-container'></div>
+        <div id='like-button-container'></div>
         <div id='upload-spot-clip'></div>
         <div id='spot-clips'></div>
     </div>
@@ -21,10 +22,14 @@
 
     {% load static  %}
     <script src="{% static 'frontend/js/components/spotFollowButton.js' %}"></script>
+    {% load static  %}
+    <script src="{% static 'frontend/js/components/SpotLikeButtonDev.js' %}"></script>
 
     <script>
         let followButton = new SpotFollowButton(targetDiv='follow-button-container', spot_id=spot_id);
         followButton.renderButton();
+        let likeButton = new SpotLikeButton(targetDiv='like-button-container', spot_id=spot_id);
+        likeButton.renderButton();
     </script>
 
 
