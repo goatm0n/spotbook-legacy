@@ -14,7 +14,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function renderSpotLikeButton(spot) {
+/* function renderSpotLikeButton(spot) {
     const spotLikeButtonContainer = document.createElement('div');
     spotLikeButtonContainer.id = 'spot-like-button-container';
     
@@ -39,9 +39,9 @@ function renderSpotLikeButton(spot) {
     spotLikeButtonContainer.appendChild(spotLikeForm);
     
     return spotLikeButtonContainer;
-}
+} */
 
-function renderSpotLikeCounter(spot) {
+/* function renderSpotLikeCounter(spot) {
     const spotLikeCounterContainer = document.createElement('div');
     spotLikeCounterContainer.id = 'spot-like-counter-container';
     spotLikeCounterContainer.setAttribute('class', 'container');
@@ -52,7 +52,7 @@ function renderSpotLikeCounter(spot) {
     
     return spotLikeCounterContainer;
 
-}
+} */
 
 function renderSpotDetail(spot) {
 
@@ -80,19 +80,19 @@ function renderSpotDetail(spot) {
     spotDescription.textContent = spot.properties.description;
     spotDescriptionDiv.appendChild(spotDescription);
 
-    const spotLikesDiv = document.createElement('div');
+    /* const spotLikesDiv = document.createElement('div');
     spotLikesDiv.id = 'spot-likes-container';
     const spotLikeButton = renderSpotLikeButton(spot);
     spotLikesDiv.appendChild(spotLikeButton);
     const spotLikeCounter = renderSpotLikeCounter(spot);
-    spotLikesDiv.appendChild(spotLikeCounter);
+    spotLikesDiv.appendChild(spotLikeCounter); */
     
     
 
     spotDetailContainer.appendChild(spotTitleDiv);
     spotDetailContainer.appendChild(spotTypeDiv);
     spotDetailContainer.appendChild(spotDescriptionDiv);
-    spotDetailContainer.appendChild(spotLikesDiv);
+   /*  spotDetailContainer.appendChild(spotLikesDiv); */
 
     return spotDetailContainer;
 }
