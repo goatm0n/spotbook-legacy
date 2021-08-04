@@ -45,8 +45,8 @@ class SpotLikeButton {
 
     // getter
     async button() {
-        var follows = await this.doesUserLikeSpot();
-        if (follows) {
+        var likes = await this.doesUserLikeSpot();
+        if (likes) {
             return this.buildButton('unlike');
         } else {
             return this.buildButton('like');

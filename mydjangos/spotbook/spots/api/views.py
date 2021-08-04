@@ -71,13 +71,16 @@ def spot_like_toggle_view(request, spot_id):
 
     return Response({}, status=201)
 
-def spot_like_action_view(request, spot_id):
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def spot_like_action_view(request, spot_id, *args, **kwargs):
     user = request.user
     qs = Spot.objects.filter(id=spot_id)
     if not qs.exists():
         return Response({}, status=404)
     
     spot = qs.first()
+
     data = request.data or {}
     action = data.get('action')
 
