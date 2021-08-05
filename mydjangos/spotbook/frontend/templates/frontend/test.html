@@ -5,13 +5,8 @@
         <div id='follow-spot-button-container'></div>
 
         {% load static  %}
-        <script src="{% static 'frontend/js/components/spotFollowButton.js' %}"></script>
+        <script src="{% static 'frontend/js/components/SpotClip.js' %}"></script>
 
-        <script>
-            var spot_id = "{{ spot_id }}"
-            let followButton = new SpotFollowButton(targetDiv='follow-spot-button-container', spot_id=spot_id);
-            followButton.renderButton();
-        </script>
         
     </body>
 </html>

@@ -81,9 +81,13 @@ def profile_update_view(request, *args, **kwargs):
 
     return render(request, 'frontend/profile-form.html', context)
 
+def spot_clip_view(request, clip_id):
+    context = {"clip_id": clip_id}
 
-def test_view(request, spot_id):
-    context = {'spot_id': spot_id}
+    return render(request, 'frontend/spotClip.html', context)
+
+def test_view(request):
+    context = {}
     
     return render(request, 'frontend/test.html', context)
     

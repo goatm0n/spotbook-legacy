@@ -1,0 +1,20 @@
+{% extends 'frontend/base.html' %}
+
+
+{% block content %}
+
+    <div id='spot-clip'></div>
+
+    {% load static  %}
+    <script src="{% static 'frontend/js/components/SpotClip.js' %}"></script>
+
+    <script>
+        var clip_id = "{{ clip_id }}";
+        var spotClip = new SpotClip(targetDiv='spot-clip', clip_id=clip_id);
+        spotClip.render();
+    </script>
+
+{% endblock content %}
+    
+
+
