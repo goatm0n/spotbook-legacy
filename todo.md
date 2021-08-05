@@ -60,4 +60,9 @@
         -> content from followed spots
         -> content from followed users
 
+6. Clips
+    * belongs to spot and user
+    * SpotClip
+        * reusable javascript component
+
     
