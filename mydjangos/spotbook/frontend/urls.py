@@ -14,6 +14,7 @@ urlpatterns = [
     path('profile/', views.profile_view, name='profile-page'),
     path('profile/<str:username>/', views.profile_detail_view, name='profile-detail-page'),
     path('profile-update/', views.profile_update_view, name='profile-update-page'),
+    path('spot-clip/<str:clip_id>/', views.spot_clip_view, name='spot-clip'),
     path('test/<str:spot_id>/', views.test_view, name='test-page'),
 
 ]
