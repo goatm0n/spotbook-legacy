@@ -41,7 +41,7 @@
      -> Likes
         -> fix redirect
 
-3. Spotmap
+4. Spotmap
     -> Interactive map
     -> View spots on map
         -> Reduce spot clutter
@@ -49,18 +49,18 @@
                 -> Zoom level controls spots shown
     ->spotmarkers
 
-4. Spotpage
+5. Spotpage
     -> view spot details
     -> view spot clips
     -> upload clip to spot
 
-5. SpotFeed
+6. SpotFeed
     -> Spot content
     -> newsfeed
         -> content from followed spots
         -> content from followed users
 
-6. SpotClip
+7. SpotClip
     * reusable javascript component
 
     
