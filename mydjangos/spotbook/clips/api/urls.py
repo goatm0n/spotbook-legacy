@@ -11,6 +11,7 @@ urlpatterns = [
     path('clip-like/<str:clip_id>/', views.clip_like_toggle_view, name='clip-like-toggle-view'),
     path('clip-like-action/<str:clip_id>/', views.clip_like_action_view, name='api-clip-like-action-view'),
     path('does-user-like/<str:clip_id>/', views.does_user_like, name='check user likes spot'),
+    path('likes-count/<str:clip_id>/', views.clip_likes_count_view, name='api-clip-likes-count'),
     
     
 ]

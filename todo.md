@@ -61,3 +61,15 @@
         -> content from followed users
 
     
+6. SpotClip
+    -> Like button
+    -> clip likes displayed
+    -> comment section
+    -> username displayed
+    -> user profile photo displayed
+    -> spot displayed
+    -> spot profile photo ???
+    -> clip text content displayed
+    -> clip image displayed
+    -> timestamp displayed
+    -> like count component

@@ -3,6 +3,7 @@ class ClipLikeButton {
         this.clip_id = clip_id;
     }
 
+    // FETCHERS
     // check if user likes spot
     async fetchDoesUserLikeClip() {
         let url = `http://127.0.0.1:8000/clips/api/does-user-like/${this.clip_id}/`;
@@ -14,6 +15,7 @@ class ClipLikeButton {
         }
     }
 
+    // GETTERS
     // getter
     async doesUserLikeClip() {
         var result = await this.fetchDoesUserLikeClip();

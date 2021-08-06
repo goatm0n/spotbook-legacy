@@ -109,3 +109,16 @@ def does_user_like(request, clip_id, *args, **kwargs):
     else:
         return Response({}, status=404)
 
+@api_view(['GET'])
+def clip_likes_count_view(request, clip_id):
+    qs = Clip.objects.filter(id=clip_id)
+    if not qs.exists():
+        return Response({}, status=404)
+    clip = qs.first()
+    likes_qs = clip.likes.all()
+    count = likes_qs.count()
+    print(count)
+
+    return Response({'count': count}, status=200)
+
+
