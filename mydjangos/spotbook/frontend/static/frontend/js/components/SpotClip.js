@@ -1,6 +1,5 @@
 class SpotClip {
-    constructor(targetDiv, clip_id) {
-        this.targetDiv = targetDiv;
+    constructor(clip_id) {
         this.clip_id = clip_id;
     }
 
@@ -20,36 +19,42 @@ class SpotClip {
         return await this.fetchClipObj();
     }
 
-    spotClip() {
-        return this.buildSpotClip();
+    async buildLikeButton() {
+        var myLikeButtonObj = new ClipLikeButton(clip_id=this.clip_id);
+        var myButton = await myLikeButtonObj.button();
+        return myButton
+    }
+
+    async spotClip() {
+        var mySpotClip = await this.buildSpotClip();
+        return mySpotClip;
     }
 
 
     //method
-    buildSpotClip() {
+    async buildSpotClip() {
         const spotClipDiv = document.createElement('div');
         spotClipDiv.id = 'spot-clip-div';
-        
-        const likeButtonDiv = document.createElement('div');
-        likeButtonDiv.id = 'like-buttton';
-        // call like button component
 
-        spotClipDiv.appendChild(likeButtonDiv);
+        const spotClipLikeButtonDiv = await this.buildLikeButton();
+
+        spotClipDiv.appendChild(spotClipLikeButtonDiv);
+        
 
         return spotClipDiv;
     }
 
-    render() {
-        let spotclip = this.spotClip();
-        const target = document.getElementById(this.targetDiv);
-        target.appendChild(spotclip);
+    async render(target_div) {
+        var spotClipToRender = await this.spotClip();
+        const target = document.getElementById(target_div);
+        target.appendChild(spotClipToRender);
     }
 
 
-
     // test method
-    test() {
-        console.log(this.fetchClipObj());
+    async test() {
+        var result = await this.buildLikeButton();
+        console.log(result);
     }
 
 }

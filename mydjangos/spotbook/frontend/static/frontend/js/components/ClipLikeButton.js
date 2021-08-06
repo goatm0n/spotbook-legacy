@@ -1,6 +1,5 @@
 class ClipLikeButton {
-    constructor(target_div, clip_id) {
-        this.target_div = target_div;
+    constructor(clip_id) {
         this.clip_id = clip_id;
     }
 
@@ -93,9 +92,9 @@ class ClipLikeButton {
         return buttonDiv;
     }
 
-    async renderButton() {
+    async render(target_div) {
         const likeButton = await this.button();
-        const target = document.getElementById(this.target_div);
+        const target = document.getElementById(target_div);
         target.appendChild(likeButton);
     }
 }
