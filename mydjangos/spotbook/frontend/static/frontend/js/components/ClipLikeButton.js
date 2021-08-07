@@ -15,18 +15,7 @@ class ClipLikeButton {
         }
     }
 
-    // GETTERS
-    // getter
-    async doesUserLikeClip() {
-        var result = await this.fetchDoesUserLikeClip();
-        return result.data;
-    }
-
-    // getter 
-    get csrfCookie() {
-        return this.getCookie('csrftoken');
-    }
-
+    // METHODS
     //method
     getCookie(name) {
         let cookieValue = null;
@@ -44,7 +33,47 @@ class ClipLikeButton {
         return cookieValue;
     }
 
-    // getter
+    // like button event listener
+    processLikeForm(event) {
+        event.preventDefault();
+        let form = document.getElementById('clip-like-button-form');
+        let action = form.action.value;
+        let url = form.getAttribute('action');
+        let dataObj = {'action': action,};
+        let data = JSON.stringify(dataObj);
+        let cookie = form.csrfmiddlewaretoken.value;
+        
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-type': 'application/json',
+                'X-CSRFToken': cookie
+            },
+            body: data,
+        }).then(response => {
+            console.log(response)
+        }).catch(err => {
+            console.log(err)
+        })
+
+        location.reload();
+
+        return false;
+    }
+
+
+    // GETTERS
+
+    async doesUserLikeClip() {
+        var result = await this.fetchDoesUserLikeClip();
+        return result.data;
+    }
+
+    get csrfCookie() {
+        return this.getCookie('csrftoken');
+    }
+
     async button() {
         var likes = await this.doesUserLikeClip();
         if (likes) {
@@ -54,7 +83,8 @@ class ClipLikeButton {
         }  
     }
 
-    //method
+    // BUILDERS
+
     buildButton(action) {
         const csrftoken = this.csrfCookie;
 
@@ -62,18 +92,20 @@ class ClipLikeButton {
         buttonDiv.id = 'like-button-div';
 
         const form = document.createElement('form');
+        form.id = 'clip-like-button-form';
         form.action = `http://127.0.0.1:8000/clips/api/clip-like-action/${this.clip_id}/`;
         form.method = 'POST';
         form.headers = {
             'Accept': 'application/json, text/plain, */*',
             'Content-type': 'application/json',
         }
+        form.addEventListener('submit', this.processLikeForm);
 
         const button = document.createElement('button');
         button.id = 'clip-like-button';
         button.type = 'submit';
         button.setAttribute('class', 'btn btn-secondary');
-        button.textContent = action;
+        button.textContent = `${action}`;
 
         const formAction = document.createElement('input');
         formAction.type = 'hidden';
@@ -93,6 +125,8 @@ class ClipLikeButton {
 
         return buttonDiv;
     }
+
+    // RENDERERS
 
     async render(target_div) {
         const likeButton = await this.button();
