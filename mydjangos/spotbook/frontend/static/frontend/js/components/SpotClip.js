@@ -44,6 +44,11 @@ class SpotClip {
         return username;
     }
 
+    async getClipImage() {
+        var result = await this.buildClipImage();
+        return result;
+    }
+
     async spotClip() {
         var mySpotClip = await this.buildSpotClip();
         return mySpotClip;
@@ -57,6 +62,12 @@ class SpotClip {
         let profile_badge = new ProfileBadge(username=username).getProfileBadge();
         
         return profile_badge;
+    }
+
+    async buildClipImage() {
+        let clip_image = new ClipImage(clip_id=this.clip_id);
+        let result = await clip_image.getClipImage();
+        return result
     }
     
     async buildLikeButton() {
@@ -82,11 +93,14 @@ class SpotClip {
 
         const profileBadgeDiv = await this.buildProfileBadge();
 
+        const spotClipImage = await this.getClipImage();
+
         const spotClipLikeButtonDiv = await this.buildLikeButton();
 
         const spotClipLikeCounterDiv = await this.buildLikeCounter();
 
         mainContainer.appendChild(profileBadgeDiv);
+        mainContainer.appendChild(spotClipImage);
         mainContainer.appendChild(spotClipLikeButtonDiv);
         mainContainer.appendChild(spotClipLikeCounterDiv);
 
@@ -106,7 +120,7 @@ class SpotClip {
 
     // test method
     async test() {
-        this.getUsername();
+        this.buildClipImage();
     }
 
 }
