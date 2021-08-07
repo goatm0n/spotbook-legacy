@@ -4,6 +4,7 @@
     {{ block.super }}
     {% load static %}
     <link rel="stylesheet" href="{% static 'frontend/css/components/SpotClip.css' %}">
+    <link rel="stylesheet" href="{% static 'frontend/css/components/ProfileBadge.css' %}">
 {% endblock css %}
 
 
@@ -12,6 +13,8 @@
     <div id='spot-clip'></div>
     <div id='test'></div>
 
+    {% load static  %}
+    <script src="{% static 'frontend/js/components/ProfileBadge.js' %}"></script>
     {% load static  %}
     <script src="{% static 'frontend/js/components/ClipLikeButton.js' %}"></script>
     {% load static  %}
@@ -23,11 +26,6 @@
         var clip_id = "{{ clip_id }}";
         var spotClip = new SpotClip(clip_id=clip_id);
         spotClip.render(target_div='spot-clip');
-    </script>
-
-    <script>
-        var likeCounter = new ClipLikeCounter(clip_id=clip_id);
-        likeCounter.render(target_div='test');
     </script>
 
 {% endblock content %}

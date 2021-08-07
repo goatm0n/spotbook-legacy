@@ -1,9 +1,7 @@
 class SpotClip {
+    // imported comoponents must be included in script tag of html doc before SpotClip
     constructor(clip_id) {
         this.clip_id = clip_id;
-        // imported comoponents must be included in script tag of html doc before SpotClip
-        this.clip_like_button = new ClipLikeButton(clip_id=this.clip_id);
-        this.clip_like_counter = new ClipLikeCounter(clip_id=this.clip_id);
     }
 
     // FETCHERS
@@ -18,10 +16,32 @@ class SpotClip {
         }
     }
 
+    async fetchAccountObj() {
+        let clipObj = await this.getClipObj();
+        let account_id = clipObj.user;
+        let url = `http://127.0.0.1:8000/accounts/api/account-detail/${account_id}/`;
+        try {
+            let response = await(fetch(url));
+            return await response.json();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     // GETTERS
 
     async getClipObj() {
         return await this.fetchClipObj();
+    }
+
+    async getAccountobj() {
+        return await this.fetchAccountObj();
+    }
+
+    async getUsername() {
+        let accountObj = await this.getAccountobj();
+        let username = accountObj.username;
+        return username;
     }
 
     async spotClip() {
@@ -31,14 +51,23 @@ class SpotClip {
 
 
     // BUILDERS
+
+    async buildProfileBadge() {
+        let username = await this.getUsername();
+        let profile_badge = new ProfileBadge(username=username).getProfileBadge();
+        
+        return profile_badge;
+    }
     
     async buildLikeButton() {
-        var myButton = await this.clip_like_button.button();     
-        return myButton
+        let clip_like_button = new ClipLikeButton(clip_id=this.clip_id);
+        var myButton = await clip_like_button.button();     
+        return myButton;
     }
 
     async buildLikeCounter() {
-        var myCounter = await this.clip_like_counter.counter();
+        let clip_like_counter = new ClipLikeCounter(clip_id=this.clip_id);
+        var myCounter = await clip_like_counter.counter();
         return myCounter;
     }
 
@@ -51,10 +80,13 @@ class SpotClip {
         mainContainer.id = 'main-container';
         mainContainer.setAttribute('class', 'container');
 
+        const profileBadgeDiv = await this.buildProfileBadge();
+
         const spotClipLikeButtonDiv = await this.buildLikeButton();
 
         const spotClipLikeCounterDiv = await this.buildLikeCounter();
 
+        mainContainer.appendChild(profileBadgeDiv);
         mainContainer.appendChild(spotClipLikeButtonDiv);
         mainContainer.appendChild(spotClipLikeCounterDiv);
 
@@ -74,8 +106,7 @@ class SpotClip {
 
     // test method
     async test() {
-        var result = await this.buildLikeButton();
-        console.log(result);
+        this.getUsername();
     }
 
 }

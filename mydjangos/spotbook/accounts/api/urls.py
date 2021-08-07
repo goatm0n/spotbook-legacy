@@ -4,6 +4,6 @@ from . import views
 urlpatterns = [
     path('', views.apiOverview, name='api-overview'),
     path('account-list/', views.accountList, name='api-account-list'),
-    path('account-detail/<str:pk>', views.accountDetail, name='api-account-detail'),
+    path('account-detail/<str:pk>/', views.accountDetail, name='api-account-detail'),
     path('account-create/', views.account_create_view, name='api-account-create'),
 ]
