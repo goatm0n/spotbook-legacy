@@ -2,15 +2,15 @@
 <html>
     <head></head>
     <body>
-        <div id='like-clip-button-container'></div>
+        <div id='test'></div>
 
         {% load static  %}
-        <script src="{% static 'frontend/js/components/ClipLikeButton.js' %}"></script>
+        <script src="{% static 'frontend/js/components/SpotBadge.js' %}"></script>
 
         <script>
-            var clip_id = "{{ clip_id }}";
-            let likeButton = new ClipLikeButton(targetDiv='like-clip-button-container', clip_id=clip_id);
-            likeButton.renderButton();
+            var spot_id = "{{ spot_id }}";
+            let spotBadge = new SpotBadge(spot_id=spot_id);
+            
         </script>
         
     </body>

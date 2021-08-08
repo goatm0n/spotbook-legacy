@@ -1,5 +1,30 @@
 class SpotClip {
-    // imported comoponents must be included in script tag of html doc before SpotClip
+    /* 
+        MUST INCLUDE COMPONENTS IN HTML
+        CSS
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'frontend/css/components/SpotClip.css' %}">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'frontend/css/components/ProfileBadge.css' %}">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'frontend/css/components/ClipImage.css' %}">
+
+        JS
+        {% load static  %}
+        <script src="{% static 'frontend/js/components/ProfileBadge.js' %}"></script>
+        {% load static  %}
+        <script src="{% static 'frontend/js/components/SpotBadge.js' %}"></script>
+        {% load static  %}
+        <script src="{% static 'frontend/js/components/ClipImage.js' %}"></script>
+        {% load static  %}
+        <script src="{% static 'frontend/js/components/ClipTextContent.js' %}"></script>
+        {% load static  %}
+        <script src="{% static 'frontend/js/components/ClipLikeButton.js' %}"></script>
+        {% load static  %}
+        <script src="{% static 'frontend/js/components/ClipLikeCounter.js' %}"></script>
+        {% load static  %}
+        <script src="{% static 'frontend/js/components/SpotClip.js' %}"></script>
+    */
     constructor(clip_id) {
         this.clip_id = clip_id;
     }
@@ -38,10 +63,21 @@ class SpotClip {
         return await this.fetchAccountObj();
     }
 
+    async getSpotId() {
+        let clipObj = await this.getClipObj();
+        let spotId = clipObj.spot;
+        return spotId;
+    }
+
     async getUsername() {
         let accountObj = await this.getAccountobj();
         let username = accountObj.username;
         return username;
+    }
+
+    async getSpotBadge() {
+        let result = await this.buildSpotBadge();
+        return result;
     }
 
     async getClipImage() {
@@ -67,6 +103,13 @@ class SpotClip {
         let profile_badge = new ProfileBadge(username=username).getProfileBadge();
         
         return profile_badge;
+    }
+
+    async buildSpotBadge() {
+        var spot_id = await this.getSpotId();
+        var spot_badge_obj = new SpotBadge(spot_id=spot_id);
+        var spot_badge = spot_badge_obj.getSpotBadge();
+        return spot_badge;
     }
 
     async buildClipImage() {
@@ -104,6 +147,8 @@ class SpotClip {
 
         const profileBadgeDiv = await this.buildProfileBadge();
 
+        const spotBadgeDiv = await this.getSpotBadge();
+
         const spotClipImage = await this.getClipImage();
 
         const spotClipTextContent = await this.getClipTextContent();
@@ -113,6 +158,7 @@ class SpotClip {
         const spotClipLikeCounterDiv = await this.buildLikeCounter();
 
         mainContainer.appendChild(profileBadgeDiv);
+        mainContainer.appendChild(spotBadgeDiv);
         mainContainer.appendChild(spotClipImage);
         mainContainer.appendChild(spotClipTextContent);
         mainContainer.appendChild(spotClipLikeButtonDiv);
@@ -134,7 +180,7 @@ class SpotClip {
 
     // test method
     async test() {
-        this.buildClipImage();
+        this.getSpotBadge();
     }
 
 }
