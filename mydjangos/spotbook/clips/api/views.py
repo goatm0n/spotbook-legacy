@@ -69,3 +69,56 @@ def clip_like_toggle_view(request, clip_id):
 
     return Response({}, status=201)
 
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def clip_like_action_view(request, clip_id):
+    qs = Clip.objects.filter(id=clip_id)
+    if not qs.exists():
+        return Response({}, status=404)
+    clip = qs.first()
+
+    data = request.data or {}
+    action = data.get('action')
+    user = request.user
+
+    if action == 'like':
+        clip.likes.add(user)
+    elif action=='unlike':
+        clip.likes.remove(user)
+    else:
+        pass
+
+    likes_qs = clip.likes.all()
+    count = likes_qs.count()
+
+    return Response({'count': count}, status=201)
+
+@api_view(['GET'])
+def does_user_like(request, clip_id, *args, **kwargs):
+    qs = Clip.objects.filter(id=clip_id)
+    if not qs.exists():
+        return Response({}, status=404)
+
+    user = request.user
+    clip = qs.first()
+
+    if user in clip.likes.all():
+        return Response({"data": True}, status=200)
+    elif user not in clip.likes.all():
+        return Response({"data": False}, status=200)
+    else:
+        return Response({}, status=404)
+
+@api_view(['GET'])
+def clip_likes_count_view(request, clip_id):
+    qs = Clip.objects.filter(id=clip_id)
+    if not qs.exists():
+        return Response({}, status=404)
+    clip = qs.first()
+    likes_qs = clip.likes.all()
+    count = likes_qs.count()
+    print(count)
+
+    return Response({'count': count}, status=200)
+
+

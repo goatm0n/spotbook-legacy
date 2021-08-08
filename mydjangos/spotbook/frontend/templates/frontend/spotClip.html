@@ -1,17 +1,38 @@
 {% extends 'frontend/base.html' %}
 
+{% block css %}
+    {{ block.super }}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'frontend/css/components/SpotClip.css' %}">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'frontend/css/components/ProfileBadge.css' %}">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'frontend/css/components/ClipImage.css' %}">
+{% endblock css %}
+
 
 {% block content %}
 
     <div id='spot-clip'></div>
+    <div id='test'></div>
 
+    {% load static  %}
+    <script src="{% static 'frontend/js/components/ProfileBadge.js' %}"></script>
+    {% load static  %}
+    <script src="{% static 'frontend/js/components/ClipImage.js' %}"></script>
+    {% load static  %}
+    <script src="{% static 'frontend/js/components/ClipTextContent.js' %}"></script>
+    {% load static  %}
+    <script src="{% static 'frontend/js/components/ClipLikeButton.js' %}"></script>
+    {% load static  %}
+    <script src="{% static 'frontend/js/components/ClipLikeCounter.js' %}"></script>
     {% load static  %}
     <script src="{% static 'frontend/js/components/SpotClip.js' %}"></script>
 
     <script>
         var clip_id = "{{ clip_id }}";
-        var spotClip = new SpotClip(targetDiv='spot-clip', clip_id=clip_id);
-        spotClip.render();
+        var spotClip = new SpotClip(clip_id=clip_id);
+        spotClip.render(target_div='spot-clip');
     </script>
 
 {% endblock content %}
