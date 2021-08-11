@@ -1,6 +1,7 @@
-import Test from './components/TestComponent.js';
+import ProfileDetail from './components/profileDetail.js';
 
 console.log('running');
 
-let test = new Test();
-test.sayHi();
+let username = 'admin';
+let obj = new ProfileDetail(username=username);
+obj.getProfileDetailDiv();
