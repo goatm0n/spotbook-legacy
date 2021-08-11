@@ -5,13 +5,7 @@
         <div id='test'></div>
 
         {% load static  %}
-        <script src="{% static 'frontend/js/components/SpotBadge.js' %}"></script>
-
-        <script>
-            var spot_id = "{{ spot_id }}";
-            let spotBadge = new SpotBadge(spot_id=spot_id);
-            
-        </script>
+        <script type="module" src="{% static 'frontend/js/test.js' %}"></script>
         
     </body>
 </html>
