@@ -1,6 +1,4 @@
-import Test from './components/TestComponent.js';
+import Profile from './Profile.js';
 
-console.log('running');
-
-let test = new Test();
-test.sayHi();
+var profileObj = new Profile();
+profileObj.render('test-div', 'tester');

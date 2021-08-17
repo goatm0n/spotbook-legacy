@@ -86,8 +86,8 @@ def spot_clip_view(request, clip_id):
 
     return render(request, 'frontend/spotClip.html', context)
 
-def test_view(request, spot_id):
-    context = {'spot_id': spot_id}
+def test_view(request):
+    #context = {'spot_id': spot_id}
     
-    return render(request, 'frontend/test.html', context)
+    return render(request, 'frontend/test.html')#, context)
     
