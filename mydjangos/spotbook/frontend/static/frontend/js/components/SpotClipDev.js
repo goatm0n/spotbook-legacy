@@ -1,5 +1,6 @@
 import SpotBadge from "./SpotBadge.js";
 import ProfileBadge from "./ProfileBadge.js";
+import ClipImage from "./ClipImage.js";
 
 export default class SpotClip {
     // FETCHERS
@@ -61,8 +62,9 @@ export default class SpotClip {
         return result;
     }
 
-    async getClipImage() {
-        var result = await this.buildClipImage();
+    async getClipImage(clip_id) {
+        var result = await this.buildClipImage(clip_id);
+        console.log(result);
         return result;
     }
 
@@ -85,9 +87,9 @@ export default class SpotClip {
         return profile_badge;
     }
 
-    async buildClipImage() {
-        let clip_image = new ClipImage(clip_id=this.clip_id);
-        let result = await clip_image.getClipImage();
+    async buildClipImage(clip_id) {
+        let clip_image = new ClipImage();
+        let result = await clip_image.getClipImage(clip_id);
         return result;
     }
 }
