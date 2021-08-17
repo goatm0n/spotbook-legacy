@@ -1,4 +1,5 @@
 import SpotBadge from "./SpotBadge.js";
+import ProfileBadge from "./ProfileBadge.js";
 
 export default class SpotClip {
     // FETCHERS
@@ -44,7 +45,7 @@ export default class SpotClip {
     }
 
     async getUsername(clip_id) {
-        let accountObj = await this.getAccountobj(clip_id);
+        let accountObj = await this.getAccountObj(clip_id);
         let username = accountObj.username;
         return username;
     }
@@ -54,6 +55,19 @@ export default class SpotClip {
         return result;
     }
 
+    async getProfileBadge(clip_id) {
+        let result = await this.buildProfileBadge(clip_id);
+        console.log(result);
+        return result;
+    }
+
+    async getClipImage() {
+        var result = await this.buildClipImage();
+        return result;
+    }
+
+
+
     // BUILDERS
 
     async buildSpotBadge(clip_id) {
@@ -61,5 +75,19 @@ export default class SpotClip {
         var spot_badge_obj = new SpotBadge();
         var spot_badge = await spot_badge_obj.getSpotBadge(spot_id);
         return spot_badge;
+    }
+
+    async buildProfileBadge(clip_id) {
+        var username = await this.getUsername(clip_id);
+        var profile_badge_obj = new ProfileBadge();
+        var profile_badge = profile_badge_obj.getProfileBadge(username);
+        
+        return profile_badge;
+    }
+
+    async buildClipImage() {
+        let clip_image = new ClipImage(clip_id=this.clip_id);
+        let result = await clip_image.getClipImage();
+        return result;
     }
 }
