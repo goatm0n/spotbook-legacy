@@ -1,7 +1,4 @@
-import ProfileDetail from './components/profileDetail.js';
+import Profile from './Profile.js';
 
-console.log('running');
-
-let username = 'admin';
-let obj = new ProfileDetail(username=username);
-obj.getProfileDetailDiv();
+var profileObj = new Profile();
+profileObj.render('test-div', 'tester');
