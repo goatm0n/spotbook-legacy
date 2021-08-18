@@ -1,4 +1,4 @@
-import Profile from './Profile.js';
+import SpotClip from "./components/SpotClip.js";
 
-var profileObj = new Profile();
-profileObj.render('test-div', 'tester');
+var clip = new SpotClip();
+clip.render('1', 'test-div');

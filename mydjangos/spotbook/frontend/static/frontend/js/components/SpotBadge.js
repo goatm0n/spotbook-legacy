@@ -1,12 +1,9 @@
-class SpotBadge {
-    constructor(spot_id) {
-        this.spot_id = spot_id;
-    }
+export default class SpotBadge {
 
     // FETCHERS
 
-    async fetchSpotDetail() {
-        let url = `http://127.0.0.1:8000/spots/api/spot-detail/${this.spot_id}`;
+    async fetchSpotDetail(spot_id) {
+        let url = `http://127.0.0.1:8000/spots/api/spot-detail/${spot_id}`;
         try {
             let response = await(fetch(url));
             return await response.json();
@@ -15,8 +12,8 @@ class SpotBadge {
         }
     }
 
-    async fetchUserDetail() {
-        let user_id = await this.getUserId();
+    async fetchUserDetail(spot_id) {
+        let user_id = await this.getUserId(spot_id);
         let url = `http://127.0.0.1:8000/accounts/api/account-detail/${user_id}/`;
         try {
             let response = await(fetch(url));
@@ -28,41 +25,41 @@ class SpotBadge {
 
     // GETTERS
 
-    async getSpotObj() {
-        let result = await this.fetchSpotDetail();
+    async getSpotObj(spot_id) {
+        let result = await this.fetchSpotDetail(spot_id);
         return result;    
     }
 
-    async getUserId() {
-        let spotObj = await this.getSpotObj();
+    async getUserId(spot_id) {
+        let spotObj = await this.getSpotObj(spot_id);
         let userId = spotObj.properties.user;
         return userId;
     }
 
-    async getUserObj() {
-        let result = await this.fetchUserDetail();
+    async getUserObj(spot_id) {
+        let result = await this.fetchUserDetail(spot_id);
         return result;
     }
 
-    async getSpotTitle() {
-        let obj = await this.getSpotObj();
+    async getSpotTitle(spot_id) {
+        let obj = await this.getSpotObj(spot_id);
         let result = obj.properties.title;
         return result;
     }
 
-    async getUsername() {
-        let userObj = await this.getUserObj();
+    async getUsername(spot_id) {
+        let userObj = await this.getUserObj(spot_id);
         let username = userObj.username;
         return username;
     }
 
-    async getTitleDiv() {
-        let result = await this.buildTitle();
+    async getTitleDiv(spot_id) {
+        let result = await this.buildTitle(spot_id);
         return result;
     }
 
-    async getSpotBadge() {
-        let result = await this.buildSpotBadge();
+    async getSpotBadge(spot_id) {
+        let result = await this.buildSpotBadge(spot_id);
         return result;
     }
 
@@ -70,25 +67,25 @@ class SpotBadge {
 
     // BUILDERS
 
-    async buildTitle() {
+    async buildTitle(spot_id) {
         var titleDiv = document.createElement('div');
         titleDiv.id = 'spot-title-div';
 
         const titleLink = document.createElement('a');
         titleLink.id = 'title-link';
-        titleLink.setAttribute('href', `http://127.0.0.1:8000/spotbook/spotpage/${this.spot_id}/`);
-        titleLink.textContent = await this.getSpotTitle();
+        titleLink.setAttribute('href', `http://127.0.0.1:8000/spotbook/spotpage/${spot_id}/`);
+        titleLink.textContent = await this.getSpotTitle(spot_id);
 
         titleDiv.appendChild(titleLink);
 
         return titleDiv;
     }
 
-    async buildSpotBadge() {
+    async buildSpotBadge(spot_id) {
         var spotBadgeDiv = document.createElement('div');
         spotBadgeDiv.id = 'spot-badge-div';
 
-        var spotTitleDiv = await this.getTitleDiv();
+        var spotTitleDiv = await this.getTitleDiv(spot_id);
 
         spotBadgeDiv.appendChild(spotTitleDiv);
 
@@ -97,7 +94,7 @@ class SpotBadge {
 
     // TESTS
 
-    async test() {
-        this.getSpotBadge();
+    async test(spot_id) {
+        this.getSpotBadge(spot_id);
     }
 }

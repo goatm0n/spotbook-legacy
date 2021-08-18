@@ -1,38 +1,15 @@
-class SpotClip {
-    /* 
-        MUST INCLUDE COMPONENTS IN HTML
-        CSS
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'frontend/css/components/SpotClip.css' %}">
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'frontend/css/components/ProfileBadge.css' %}">
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'frontend/css/components/ClipImage.css' %}">
+import SpotBadge from "./SpotBadge.js";
+import ProfileBadge from "./ProfileBadge.js";
+import ClipImage from "./ClipImage.js";
+import ClipTextContent from "./ClipTextContent.js";
+import ClipLikeButton from "./ClipLikeButton.js";
+import ClipLikeCounter from "./ClipLikeCounter.js";
 
-        JS
-        {% load static  %}
-        <script src="{% static 'frontend/js/components/ProfileBadge.js' %}"></script>
-        {% load static  %}
-        <script src="{% static 'frontend/js/components/SpotBadge.js' %}"></script>
-        {% load static  %}
-        <script src="{% static 'frontend/js/components/ClipImage.js' %}"></script>
-        {% load static  %}
-        <script src="{% static 'frontend/js/components/ClipTextContent.js' %}"></script>
-        {% load static  %}
-        <script src="{% static 'frontend/js/components/ClipLikeButton.js' %}"></script>
-        {% load static  %}
-        <script src="{% static 'frontend/js/components/ClipLikeCounter.js' %}"></script>
-        {% load static  %}
-        <script src="{% static 'frontend/js/components/SpotClip.js' %}"></script>
-    */
-    constructor(clip_id) {
-        this.clip_id = clip_id;
-    }
-
+export default class SpotClip {
     // FETCHERS
 
-    async fetchClipObj() {
-        let url = `http://127.0.0.1:8000/clips/api/clip-detail/${this.clip_id}/`;
+    async fetchClipObj(clip_id) {
+        let url = `http://127.0.0.1:8000/clips/api/clip-detail/${clip_id}/`;
         try {
             let response = await(fetch(url));
             return await response.json();
@@ -41,8 +18,8 @@ class SpotClip {
         }
     }
 
-    async fetchAccountObj() {
-        let clipObj = await this.getClipObj();
+    async fetchAccountObj(clip_id) {
+        let clipObj = await this.getClipObj(clip_id);
         let account_id = clipObj.user;
         let url = `http://127.0.0.1:8000/accounts/api/account-detail/${account_id}/`;
         try {
@@ -55,89 +32,108 @@ class SpotClip {
 
     // GETTERS
 
-    async getClipObj() {
-        return await this.fetchClipObj();
+    async getClipObj(clip_id) {
+        var result =  await this.fetchClipObj(clip_id);
+        return result;
     }
 
-    async getAccountobj() {
-        return await this.fetchAccountObj();
+    async getAccountObj(clip_id) {
+        var result = await this.fetchAccountObj(clip_id);
+        return result;
     }
 
-    async getSpotId() {
-        let clipObj = await this.getClipObj();
+    async getSpotId(clip_id) {
+        let clipObj = await this.getClipObj(clip_id);
         let spotId = clipObj.spot;
         return spotId;
     }
 
-    async getUsername() {
-        let accountObj = await this.getAccountobj();
+    async getUsername(clip_id) {
+        let accountObj = await this.getAccountObj(clip_id);
         let username = accountObj.username;
         return username;
     }
 
-    async getSpotBadge() {
-        let result = await this.buildSpotBadge();
+    async getSpotBadge(clip_id) {
+        let result = await this.buildSpotBadge(clip_id);
         return result;
     }
 
-    async getClipImage() {
-        var result = await this.buildClipImage();
+    async getProfileBadge(clip_id) {
+        let result = await this.buildProfileBadge(clip_id);
         return result;
     }
 
-    async getClipTextContent() {
-        var result = await this.buildClipTextContent();
+    async getClipImage(clip_id) {
+        var result = await this.buildClipImage(clip_id);
         return result;
     }
 
-    async spotClip() {
-        var mySpotClip = await this.buildSpotClip();
-        return mySpotClip;
+    async getClipTextContent(clip_id) {
+        var result = await this.buildClipTextContent(clip_id);
+        return result;
+    }
+
+    async getLikeButton(clip_id) {
+        var result = await this.buildLikeButton(clip_id);
+        return result;
+    }
+
+    async getLikeCounter(clip_id) {
+        var result = await this.buildClipLikeCounter(clip_id);
+        return result;
+    }
+
+    async getSpotClip(clip_id) {
+        var result = await this.buildSpotClip(clip_id);
+        return result;
+
     }
 
 
     // BUILDERS
 
-    async buildProfileBadge() {
-        let username = await this.getUsername();
-        let profile_badge = new ProfileBadge(username=username).getProfileBadge();
+    async buildSpotBadge(clip_id) {
+        var spot_id = await this.getSpotId(clip_id);
+        var spot_badge_obj = new SpotBadge();
+        var spot_badge = await spot_badge_obj.getSpotBadge(spot_id);
+        return spot_badge;
+    }
+
+    async buildProfileBadge(clip_id) {
+        var username = await this.getUsername(clip_id);
+        var profile_badge_obj = new ProfileBadge();
+        var profile_badge = profile_badge_obj.getProfileBadge(username);
         
         return profile_badge;
     }
 
-    async buildSpotBadge() {
-        var spot_id = await this.getSpotId();
-        var spot_badge_obj = new SpotBadge(spot_id=spot_id);
-        var spot_badge = spot_badge_obj.getSpotBadge();
-        return spot_badge;
-    }
-
-    async buildClipImage() {
-        let clip_image = new ClipImage(clip_id=this.clip_id);
-        let result = await clip_image.getClipImage();
+    async buildClipImage(clip_id) {
+        let clip_image = new ClipImage();
+        let result = await clip_image.getClipImage(clip_id);
         return result;
     }
 
-    async buildClipTextContent() {
-        let clip_text_content = new CLipTextContent(clip_id=this.clip_id);
-        let result = await clip_text_content.getClipTextContent();
+    async buildClipTextContent(clip_id) {
+        var clip_text_content = new ClipTextContent();
+        var result = await clip_text_content.getClipTextContent(clip_id);
         return result;
     }
-    
-    async buildLikeButton() {
-        let clip_like_button = new ClipLikeButton(clip_id=this.clip_id);
-        var myButton = await clip_like_button.button();     
-        return myButton;
+
+    async buildLikeButton(clip_id) {
+        var like_button = new ClipLikeButton();
+        var result = await like_button.getLikeButton(clip_id);
+        return result;
     }
 
-    async buildLikeCounter() {
-        let clip_like_counter = new ClipLikeCounter(clip_id=this.clip_id);
-        var myCounter = await clip_like_counter.counter();
-        return myCounter;
+    async buildClipLikeCounter(clip_id) {
+        var like_counter = new ClipLikeCounter();
+        var result = await like_counter.getCounter(clip_id);
+        return result;
     }
 
     // final build
-    async buildSpotClip() {
+    async buildSpotClip(clip_id) {
         const spotClipDiv = document.createElement('div');
         spotClipDiv.id = 'spot-clip-div';
 
@@ -145,20 +141,15 @@ class SpotClip {
         mainContainer.id = 'main-container';
         mainContainer.setAttribute('class', 'container');
 
-        const profileBadgeDiv = await this.buildProfileBadge();
+        var spotBadgeDiv = await this.getSpotBadge(clip_id);
+        var profileBadgeDiv = await this.getProfileBadge(clip_id);
+        var spotClipImage = await this.getClipImage(clip_id);
+        var spotClipTextContent = await this.getClipTextContent(clip_id);
+        var spotClipLikeButtonDiv = await this.getLikeButton(clip_id);
+        var spotClipLikeCounterDiv = await this.getLikeCounter(clip_id);
 
-        const spotBadgeDiv = await this.getSpotBadge();
-
-        const spotClipImage = await this.getClipImage();
-
-        const spotClipTextContent = await this.getClipTextContent();
-
-        const spotClipLikeButtonDiv = await this.buildLikeButton();
-
-        const spotClipLikeCounterDiv = await this.buildLikeCounter();
-
-        mainContainer.appendChild(profileBadgeDiv);
         mainContainer.appendChild(spotBadgeDiv);
+        mainContainer.appendChild(profileBadgeDiv);
         mainContainer.appendChild(spotClipImage);
         mainContainer.appendChild(spotClipTextContent);
         mainContainer.appendChild(spotClipLikeButtonDiv);
@@ -171,16 +162,10 @@ class SpotClip {
     }
 
     // RENDERERS
-    async render(target_div) {
-        var spotClipToRender = await this.spotClip();
+    async render(clip_id, target_div) {
         const target = document.getElementById(target_div);
-        target.appendChild(spotClipToRender);
-    }
-
-
-    // test method
-    async test() {
-        this.getSpotBadge();
+        var div = await this.getSpotClip(clip_id);
+        target.appendChild(div);
     }
 
 }

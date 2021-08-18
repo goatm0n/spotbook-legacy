@@ -1,12 +1,8 @@
-class CLipTextContent {
-    constructor(clip_id) {
-        this.clip_id = clip_id;
-    }
-
+export default class ClipTextContent {
     // FETCHERS
 
-    async fetchClipObj() {
-        let url = `http://127.0.0.1:8000/clips/api/clip-detail/${this.clip_id}/`;
+    async fetchClipObj(clip_id) {
+        let url = `http://127.0.0.1:8000/clips/api/clip-detail/${clip_id}/`;
         try {
             let response = await(fetch(url));
             return await response.json();
@@ -17,37 +13,32 @@ class CLipTextContent {
 
     // GETTERS
 
-    async getClipObj() {
-        return await this.fetchClipObj();
+    async getClipObj(clip_id) {
+        return await this.fetchClipObj(clip_id);
     }
 
-    async getTextContent() {
-        let obj = await this.getClipObj();
+    async getTextContent(clip_id) {
+        let obj = await this.getClipObj(clip_id);
         let result = obj.textContent;
         return result;
     }
 
-    async getClipTextContent() {
-        let result = await this.buildClipTextContent();
+    async getClipTextContent(clip_id) {
+        let result = await this.buildClipTextContent(clip_id);
         return result;
     }
 
     // BUILDERS
 
-    async buildClipTextContent() {
+    async buildClipTextContent(clip_id) {
         const clipTextContentDiv = document.createElement('div');
         clipTextContentDiv.id = 'clip-text-content-div';
 
-        const mainContainer = document.createElement('div');
-        mainContainer.id = 'main-container';
-        mainContainer.setAttribute('class', 'container');
-
         var clipTextContent = document.createElement('p');
         clipTextContent.id = 'clip-text-content';
-        clipTextContent.textContent = await this.getTextContent();
+        clipTextContent.textContent = await this.getTextContent(clip_id);
 
-        mainContainer.appendChild(clipTextContent);
-        clipTextContentDiv.appendChild(mainContainer);
+        clipTextContentDiv.appendChild(clipTextContent);
 
         return clipTextContentDiv;
     }

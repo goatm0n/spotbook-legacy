@@ -1,12 +1,7 @@
-class ClipLikeCounter {
-    constructor(clip_id) {
-        this.clip_id = clip_id;
-    }
-
+export default class ClipLikeCounter {
     // FETCHERS
-    // fetch clip likes count
-    async fetchClipLikesCount() {
-        let url = `http://127.0.0.1:8000/clips/api/likes-count/${this.clip_id}/`;
+    async fetchClipLikesCount(clip_id) {
+        let url = `http://127.0.0.1:8000/clips/api/likes-count/${clip_id}/`;
         try {
             let response = await(fetch(url));
             return await response.json();
@@ -32,25 +27,19 @@ class ClipLikeCounter {
         return cookieValue;
     }
 
-    async test() {
-        let result = await this.counter();
-        console.log(result);
-
-    }
-
     // GETTERS
     get csrfCookie() {
             return this.getCookie('csrftoken');
         }
     
-    async getClipLikeCount() {
-        var result = await this.fetchClipLikesCount();
+    async getClipLikeCount(clip_id) {
+        var result = await this.fetchClipLikesCount(clip_id);
         return result.count;
     }
 
-    async counter() {
-        let count = await this.getClipLikeCount();
-        var counterElem = this.buildCounter(count=count);
+    async getCounter(clip_id) {
+        let count = await this.getClipLikeCount(clip_id);
+        var counterElem = this.buildCounter(count);
         return counterElem;
     }
 
@@ -65,13 +54,6 @@ class ClipLikeCounter {
         likeCounterDiv.appendChild(likeCounterP);
 
         return likeCounterDiv;
-    }
-
-    // RENDERERS
-    async render(target_div) {
-        var renderObj = await this.counter();
-        const target = document.getElementById(target_div);
-        target.appendChild(renderObj);
     }
     
 }

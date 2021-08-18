@@ -1,12 +1,9 @@
-class ProfileBadge {
-    constructor(username) {
-        this.username = username;
-    }
+export default class ProfileBadge {
 
     // FETCHERS
     
-    async fetchProfileObj() {
-        let url = `http://127.0.0.1:8000/profiles/api/profile-detail/${this.username}/`;
+    async fetchProfileObj(username) {
+        let url = `http://127.0.0.1:8000/profiles/api/profile-detail/${username}/`;
         try {
             let response = await(fetch(url));
             return await response.json();
@@ -15,8 +12,8 @@ class ProfileBadge {
         }
     }
 
-    async fetchAccountObj() {
-        var account_id = await this.getProfileObj().user;
+    async fetchAccountObj(username) {
+        var account_id = await this.getProfileObj(username).user;
         let url = `http://127.0.0.1:8000/accounts/api/account-detail/${account_id}/`;
         try {
             let response = await(fetch(url));
@@ -29,68 +26,63 @@ class ProfileBadge {
 
     // GETTERS
 
-    async getProfileObj() {
-        return await this.fetchProfileObj();
+    async getProfileObj(username) {
+        return await this.fetchProfileObj(username);
     }
 
-    async getAccountobj() {
-        return await this.fetchAccountObj();
+    async getAccountobj(username) {
+        return await this.fetchAccountObj(username);
     }
 
-    async getProfilePictureSrc() {
-        let profile = await this.getProfileObj();
+    async getProfilePictureSrc(username) {
+        let profile = await this.getProfileObj(username);
         let result = profile.profile_picture;
         return result
     }
 
-    getProfileBadge() {
-        let result = this.buildProfileBadge();
+    async getProfileBadge(username) {
+        let result = await this.buildProfileBadge(username);
         return result
     }
 
     // BUILDERS
 
-    async buildProfileBadgePicture() {
+    async buildProfileBadgePicture(username) {
         const profileBadgePictureDiv = document.createElement('div');
         profileBadgePictureDiv.id = 'profile-badge-picture-div';
 
         const profileBadgePicElem = document.createElement('img');
         profileBadgePicElem.id = 'profile-badge-pic';
-        profileBadgePicElem.src = await this.getProfilePictureSrc();
+        profileBadgePicElem.src = await this.getProfilePictureSrc(username);
 
         profileBadgePictureDiv.appendChild(profileBadgePicElem);
 
         return profileBadgePictureDiv;
     }
 
-    async buildUsername() {
+    async buildUsername(username) {
         const usernameDiv = document.createElement('div');
         usernameDiv.id = 'username-div';
 
         const usernameLink = document.createElement('a');
         usernameLink.id = 'username-link';
-        usernameLink.setAttribute('href', `http://127.0.0.1:8000/spotbook/profile/${this.username}/`);
-        usernameLink.textContent = `${this.username}`;
+        usernameLink.setAttribute('href', `http://127.0.0.1:8000/spotbook/profile/${username}/`);
+        usernameLink.textContent = `${username}`;
 
         usernameDiv.appendChild(usernameLink);
 
         return usernameDiv;
     }
 
-    async buildProfileBadge() {
+    async buildProfileBadge(username) {
         const profileBadgeDiv = document.createElement('div');
         profileBadgeDiv.id = 'profile-badge-div';
 
-        const mainContainer = document.createElement('div');
-        mainContainer.id = 'main-container';
-        mainContainer.setAttribute('class', 'container');
+        const profile_badge_picture = await this.buildProfileBadgePicture(username);
+        const username_div = await this.buildUsername(username);
 
-        const profile_badge_picture = await this.buildProfileBadgePicture();
-        const username_div = await this.buildUsername();
-
-        mainContainer.appendChild(profile_badge_picture);
-        mainContainer.appendChild(username_div);
-        profileBadgeDiv.appendChild(mainContainer);
+        profileBadgeDiv.appendChild(profile_badge_picture);
+        profileBadgeDiv.appendChild(username_div);
 
         return profileBadgeDiv;
     }
@@ -98,7 +90,7 @@ class ProfileBadge {
 
     // TESTS
     async test() {
-        result = await this.getAccountObj();
+        result = await this.getAccountObj(username);
         return result
     }
 }

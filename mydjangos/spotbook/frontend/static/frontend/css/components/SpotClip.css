@@ -11,4 +11,15 @@
     padding-right: 5px;
     padding-bottom: 5px;
     padding-left: 5px;
+    width: 270px;
+}
+
+#profile-badge-pic {
+    border-radius: 8px;
+    width: 50px;
+}
+
+#clip-image {
+    border-radius: 8px;
+    width: 250px;
 }
