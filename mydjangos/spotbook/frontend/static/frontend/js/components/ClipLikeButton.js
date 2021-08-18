@@ -1,12 +1,8 @@
-class ClipLikeButton {
-    constructor(clip_id) {
-        this.clip_id = clip_id;
-    }
-
+export default class ClipLikeButton {
     // FETCHERS
-    // check if user likes spot
-    async fetchDoesUserLikeClip() {
-        let url = `http://127.0.0.1:8000/clips/api/does-user-like/${this.clip_id}/`;
+    
+    async fetchDoesUserLikeClip(clip_id) {
+        let url = `http://127.0.0.1:8000/clips/api/does-user-like/${clip_id}/`;
         try {
             let response = await(fetch(url));
             return await response.json();
@@ -16,7 +12,7 @@ class ClipLikeButton {
     }
 
     // METHODS
-    //method
+    
     getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -65,8 +61,8 @@ class ClipLikeButton {
 
     // GETTERS
 
-    async doesUserLikeClip() {
-        var result = await this.fetchDoesUserLikeClip();
+    async doesUserLikeClip(clip_id) {
+        var result = await this.fetchDoesUserLikeClip(clip_id);
         return result.data;
     }
 
@@ -74,18 +70,18 @@ class ClipLikeButton {
         return this.getCookie('csrftoken');
     }
 
-    async button() {
-        var likes = await this.doesUserLikeClip();
+    async getLikeButton(clip_id) {
+        var likes = await this.doesUserLikeClip(clip_id);
         if (likes) {
-            return this.buildButton('unlike');
+            return this.buildButton(clip_id, 'unlike');
         } else {
-            return this.buildButton('like');
+            return this.buildButton(clip_id, 'like');
         }  
     }
 
     // BUILDERS
 
-    buildButton(action) {
+    buildButton(clip_id, action) {
         const csrftoken = this.csrfCookie;
 
         const buttonDiv = document.createElement('div');
@@ -93,7 +89,7 @@ class ClipLikeButton {
 
         const form = document.createElement('form');
         form.id = 'clip-like-button-form';
-        form.action = `http://127.0.0.1:8000/clips/api/clip-like-action/${this.clip_id}/`;
+        form.action = `http://127.0.0.1:8000/clips/api/clip-like-action/${clip_id}/`;
         form.method = 'POST';
         form.headers = {
             'Accept': 'application/json, text/plain, */*',

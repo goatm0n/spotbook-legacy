@@ -2,6 +2,7 @@ import SpotBadge from "./SpotBadge.js";
 import ProfileBadge from "./ProfileBadge.js";
 import ClipImage from "./ClipImage.js";
 import ClipTextContent from "./ClipTextContent.js";
+import ClipLikeButton from "./ClipLikeButton.js";
 
 export default class SpotClip {
     // FETCHERS
@@ -69,8 +70,19 @@ export default class SpotClip {
 
     async getClipTextContent(clip_id) {
         var result = await this.buildClipTextContent(clip_id);
+        return result;
+    }
+
+    async getLikeButton(clip_id) {
+        var result = await this.buildLikeButton(clip_id);
+        return result;
+    }
+
+    async getSpotClip(clip_id) {
+        var result = await this.buildSpotClip(clip_id);
         console.log(result);
         return result;
+
     }
 
 
@@ -102,4 +114,39 @@ export default class SpotClip {
         var result = await clip_text_content.getClipTextContent(clip_id);
         return result;
     }
+
+    async buildLikeButton(clip_id) {
+        var like_button = new ClipLikeButton();
+        var result = await like_button.getLikeButton(clip_id);
+        return result;
+    }
+
+    // final build
+    async buildSpotClip(clip_id) {
+        const spotClipDiv = document.createElement('div');
+        spotClipDiv.id = 'spot-clip-div';
+
+        const mainContainer = document.createElement('div');
+        mainContainer.id = 'main-container';
+        mainContainer.setAttribute('class', 'container');
+
+        var spotBadgeDiv = await this.getSpotBadge(clip_id);
+        var profileBadgeDiv = await this.getProfileBadge(clip_id);
+        var spotClipImage = await this.getClipImage(clip_id);
+        var spotClipTextContent = await this.getClipTextContent(clip_id);
+        var spotClipLikeButtonDiv = await this.getLikeButton(clip_id);
+
+        mainContainer.appendChild(spotBadgeDiv);
+        mainContainer.appendChild(profileBadgeDiv);
+        mainContainer.appendChild(spotClipImage);
+        mainContainer.appendChild(spotClipTextContent);
+        mainContainer.appendChild(spotClipLikeButtonDiv);
+        // mainContainer.appendChild(spotClipLikeCounterDiv);
+
+        spotClipDiv.appendChild(mainContainer);
+        
+
+        return spotClipDiv;
+    }
+
 }
