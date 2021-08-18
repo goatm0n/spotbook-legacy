@@ -34,16 +34,11 @@ export default class ClipTextContent {
         const clipTextContentDiv = document.createElement('div');
         clipTextContentDiv.id = 'clip-text-content-div';
 
-        const mainContainer = document.createElement('div');
-        mainContainer.id = 'main-container';
-        mainContainer.setAttribute('class', 'container');
-
         var clipTextContent = document.createElement('p');
         clipTextContent.id = 'clip-text-content';
         clipTextContent.textContent = await this.getTextContent(clip_id);
 
-        mainContainer.appendChild(clipTextContent);
-        clipTextContentDiv.appendChild(mainContainer);
+        clipTextContentDiv.appendChild(clipTextContent);
 
         return clipTextContentDiv;
     }

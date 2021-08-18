@@ -34,16 +34,11 @@ export default class ClipImage {
         const clipImageDiv = document.createElement('div');
         clipImageDiv.id='clip-image-div';
 
-        const mainContainer = document.createElement('div');
-        mainContainer.id = 'main-container';
-        mainContainer.setAttribute('class', 'container');
-
         var clipImageElem = document.createElement('img');
         clipImageElem.id = 'clip-image';
         clipImageElem.src = await this.getClipImageSrc(clip_id);
 
-        mainContainer.appendChild(clipImageElem);
-        clipImageDiv.appendChild(mainContainer);
+        clipImageDiv.appendChild(clipImageElem);
 
         return clipImageDiv;
     }

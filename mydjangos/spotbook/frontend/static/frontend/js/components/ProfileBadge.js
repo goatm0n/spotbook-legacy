@@ -78,16 +78,11 @@ export default class ProfileBadge {
         const profileBadgeDiv = document.createElement('div');
         profileBadgeDiv.id = 'profile-badge-div';
 
-        const mainContainer = document.createElement('div');
-        mainContainer.id = 'main-container';
-        mainContainer.setAttribute('class', 'container');
-
         const profile_badge_picture = await this.buildProfileBadgePicture(username);
         const username_div = await this.buildUsername(username);
 
-        mainContainer.appendChild(profile_badge_picture);
-        mainContainer.appendChild(username_div);
-        profileBadgeDiv.appendChild(mainContainer);
+        profileBadgeDiv.appendChild(profile_badge_picture);
+        profileBadgeDiv.appendChild(username_div);
 
         return profileBadgeDiv;
     }
