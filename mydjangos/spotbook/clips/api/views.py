@@ -126,7 +126,6 @@ def clip_likes_count_view(request, clip_id):
     clip = qs.first()
     likes_qs = clip.likes.all()
     count = likes_qs.count()
-    print(count)
 
     return Response({'count': count}, status=200)
 
