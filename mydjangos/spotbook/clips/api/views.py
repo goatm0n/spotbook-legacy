@@ -25,6 +25,15 @@ def clip_list_view(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+def clip_list_username_view(request, username):
+    clip_qs = Clip.objects.filter(user__username=username)
+    clip_id_list = []
+    for obj in clip_qs:
+        clip_id_list.append(obj.id)
+    
+    return Response({"clip_id_list": clip_id_list})
+
+@api_view(['GET'])
 def clip_detail_view(request, pk):
     clip = Clip.objects.get(id=pk)
     serializer = ClipSerializer(clip)
@@ -117,7 +126,6 @@ def clip_likes_count_view(request, clip_id):
     clip = qs.first()
     likes_qs = clip.likes.all()
     count = likes_qs.count()
-    print(count)
 
     return Response({'count': count}, status=200)
 

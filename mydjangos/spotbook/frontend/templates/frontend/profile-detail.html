@@ -1,57 +1,29 @@
 {% extends 'frontend/base.html' %}
 
+
 {% block css %}
     {{ block.super }}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'frontend/css/profile-detail.css' %}">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
-{% endblock css %}
+    <link rel="stylesheet" href="{% static 'frontend/css/Profile.css' %}">
 
-{% block js %}
-    {{ block.super }}
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-{% endblock js %}
+{% endblock css %}
+    
+
 
 {% block content %}
+    
+    <div id='content'></div>
 
-<div id='content'>
-    <div id='profile-container'>
-        <div id='profile-detail-container'></div>
-        <div id='follow-button-container'></div>
-    </div>
-    <div id='spots-container'>
-        <div id='map-container'>
-            <div id='mapid'></div>
-        </div>
-    </div>
-    <div id='clips-container'></div>
-</div>
+    <script>
+        const currentUsername = "{{ username }}";
+        //console.log(currentUsername);
+    </script>
 
-{% load static  %}
-<script src="{% static 'frontend/js/components/followProfileButton.js' %}"></script>
-
-<script>
-    var _username = "{{ username }}";
-    let followButton = new FollowProfileButton(targetDiv='follow-button-container', targetUser=_username);
-    followButton.renderButton();
-</script>
-
-{% load static %}
-<script src="{% static 'frontend/js/components/profileDetail.js' %}"></script>
-
-<script>
-    let profileDetaiObj = new ProfileDetail(targetDiv='profile-detail-container', targetUser=_username);
-    profileDetaiObj.render();
-</script>
-
-
-{% load static %}
-<script src="{% static 'frontend/js/renderSpots.js' %}" type='text/javascript'></script>
-
-{% load static %}
-<script src="{% static 'frontend/js/renderClips.js' %}" type='text/javascript'></script>
+    {% load static %}
+    <script type="module" src="{% static 'frontend/js/profile-detail-index.js' %}"></script>
 
 {% endblock content %}
+    
 
 
     

@@ -1,5 +1,6 @@
-import ProfileDetail from './components/ProfileDetail.js'
-import FollowProfileButton from './components/FollowProfileButton.js/index.js';
+import ProfileDetail from './ProfileDetail.js'
+import FollowProfileButton from './FollowProfileButton.js';
+import ProfileClipList from './ProfileClipList.js';
 
 export default class Profile {
 
@@ -12,15 +13,21 @@ export default class Profile {
         return profile_detail_div;
     }
 
-    async getProfileDiv(username) {
-        var profileDiv = await this.buildProfileDiv(username);
-        return profileDiv;
-    }
-
     async getFollowProfileButtonDiv(username) {
         var obj = new FollowProfileButton();
         var div = await obj.button(username);
         return div;
+    }
+
+    async getProfileClipList(username) {
+        var obj = new ProfileClipList();
+        var div = await obj.getProfileClipList(username);
+        return div;
+    }
+
+    async getProfileDiv(username) {
+        var profileDiv = await this.buildProfileDiv(username);
+        return profileDiv;
     }
 
     // BUILDERS
@@ -31,16 +38,18 @@ export default class Profile {
 
         var profileDetailDiv = await this.getProfileDetailDiv(username);
         var followButtonDiv = await this.getFollowProfileButtonDiv(username);
+        var profileClipListDiv = await this.getProfileClipList(username);
 
         profileDiv.appendChild(profileDetailDiv);
         profileDiv.appendChild(followButtonDiv);
+        profileDiv.appendChild(profileClipListDiv);
 
         return profileDiv;
     }
 
     // RENDERERS
 
-    async render(targetDiv, username) {
+    async render(username, targetDiv) {
         var div = await this.getProfileDiv(username);
         const target = document.getElementById(targetDiv);
 
