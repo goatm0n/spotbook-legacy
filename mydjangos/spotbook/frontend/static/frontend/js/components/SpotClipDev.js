@@ -3,6 +3,7 @@ import ProfileBadge from "./ProfileBadge.js";
 import ClipImage from "./ClipImage.js";
 import ClipTextContent from "./ClipTextContent.js";
 import ClipLikeButton from "./ClipLikeButton.js";
+import ClipLikeCounter from "./ClipLikeCounter.js";
 
 export default class SpotClip {
     // FETCHERS
@@ -78,6 +79,11 @@ export default class SpotClip {
         return result;
     }
 
+    async getLikeCounter(clip_id) {
+        var result = await this.buildClipLikeCounter(clip_id);
+        return result;
+    }
+
     async getSpotClip(clip_id) {
         var result = await this.buildSpotClip(clip_id);
         console.log(result);
@@ -121,6 +127,12 @@ export default class SpotClip {
         return result;
     }
 
+    async buildClipLikeCounter(clip_id) {
+        var like_counter = new ClipLikeCounter();
+        var result = await like_counter.getCounter(clip_id);
+        return result;
+    }
+
     // final build
     async buildSpotClip(clip_id) {
         const spotClipDiv = document.createElement('div');
@@ -135,13 +147,14 @@ export default class SpotClip {
         var spotClipImage = await this.getClipImage(clip_id);
         var spotClipTextContent = await this.getClipTextContent(clip_id);
         var spotClipLikeButtonDiv = await this.getLikeButton(clip_id);
+        var spotClipLikeCounterDiv = await this.getLikeCounter(clip_id);
 
         mainContainer.appendChild(spotBadgeDiv);
         mainContainer.appendChild(profileBadgeDiv);
         mainContainer.appendChild(spotClipImage);
         mainContainer.appendChild(spotClipTextContent);
         mainContainer.appendChild(spotClipLikeButtonDiv);
-        // mainContainer.appendChild(spotClipLikeCounterDiv);
+        mainContainer.appendChild(spotClipLikeCounterDiv);
 
         spotClipDiv.appendChild(mainContainer);
         
