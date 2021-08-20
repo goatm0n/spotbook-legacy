@@ -1,4 +1,4 @@
-import SpotClip from "./components/SpotClip.js";
+import SpotDetail from "./components/spotDetail.js";
 
-var clip = new SpotClip();
-clip.render('1', 'test-div');
+var obj = new SpotDetail();
+obj.getSpotDetailDiv(1);
