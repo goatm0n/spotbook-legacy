@@ -36,7 +36,6 @@ export default class SpotDetail {
 
     async getSpotDetailDiv(spot_id) {
         var div = await this.buildSpotDetail(spot_id);
-        console.log(div);
         return div;
     }
 

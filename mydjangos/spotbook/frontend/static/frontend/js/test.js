@@ -1,4 +1,4 @@
-import SpotDetail from "./components/spotDetail.js";
+import SpotPage from "./components/SpotPage.js";
 
-var obj = new SpotDetail();
-obj.getSpotDetailDiv(1);
+var obj = new SpotPage();
+obj.render(1, 'test-div');
