@@ -1,12 +1,8 @@
-class SpotLikeButton {
-    constructor(targetDiv, spot_id) {
-        this.targetDiv = targetDiv;
-        this.spot_id = spot_id;
-    }
-
+export default class SpotLikeButton {
+    // FETCHERS
     // check if user likes spot
-    async fetchDoesUserLikeSpot() {
-        let url = `http://127.0.0.1:8000/spots/api/does-user-like/${this.spot_id}/`;
+    async fetchDoesUserLikeSpot(spot_id) {
+        let url = `http://127.0.0.1:8000/spots/api/does-user-like/${spot_id}/`;
         try {
             let response = await(fetch(url));
             return await response.json();
@@ -15,18 +11,28 @@ class SpotLikeButton {
         }
     }
 
+    // GETTERS
     // getter
-    async doesUserLikeSpot() {
-        var result = await this.fetchDoesUserLikeSpot();
+    async doesUserLikeSpot(spot_id) {
+        var result = await this.fetchDoesUserLikeSpot(spot_id);
         return result.data;
     }
 
-    // getter 
     get csrfCookie() {
         return this.getCookie('csrftoken');
     }
 
-    //method
+    async button(spot_id) {
+        var likes = await this.doesUserLikeSpot(spot_id);
+        if (likes) {
+            return this.buildButton(spot_id, 'unlike');
+        } else {
+            return this.buildButton(spot_id, 'like');
+        }  
+    }
+
+    // METHODS
+
     getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -36,37 +42,58 @@ class SpotLikeButton {
                 // Does this cookie string begin with the name we want?
                 if (cookie.substring(0, name.length + 1) === (name + '=')) {
                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
+                    break; 
                 }
             }
         }
         return cookieValue;
     }
 
-    // getter
-    async button() {
-        var likes = await this.doesUserLikeSpot();
-        if (likes) {
-            return this.buildButton('unlike');
-        } else {
-            return this.buildButton('like');
-        }  
+    processForm(event) {
+        event.preventDefault();
+        let form = document.getElementById('spot-like-form');
+        let action = form.action.value;
+        let url = form.getAttribute('action');
+        let dataObj = {'action': action};
+        let data = JSON.stringify(dataObj);
+        let cookie = form.csrfmiddlewaretoken.value;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-type': 'application/json',
+                'X-CSRFToken': cookie
+            },
+            body: data,
+        }).then(response => {
+            console.log(response)
+        }).catch(err => {
+            console.log(err)
+        })
+
+        location.reload();
+
+        return false;
     }
 
-    //method
-    buildButton(action) {
+    // BUILDERS
+
+    buildButton(spot_id, action) {
         const csrftoken = this.csrfCookie;
 
         const buttonDiv = document.createElement('div');
         buttonDiv.id = 'follow-button-div';
 
         const form = document.createElement('form');
-        form.action = `http://127.0.0.1:8000/spots/api/spot-like-action/${this.spot_id}/`;
+        form.id = 'spot-like-form';
+        form.action = `http://127.0.0.1:8000/spots/api/spot-like-action/${spot_id}/`;
         form.method = 'POST';
         form.headers = {
             'Accept': 'application/json, text/plain, */*',
             'Content-type': 'application/json',
         }
+        form.addEventListener('submit', this.processForm);
 
         const button = document.createElement('button');
         button.id = 'profile-follow-button';
@@ -93,9 +120,5 @@ class SpotLikeButton {
         return buttonDiv;
     }
 
-    async renderButton() {
-        const likeButton = await this.button();
-        const target = document.getElementById(this.targetDiv);
-        target.appendChild(likeButton);
-    }
+    
 }
