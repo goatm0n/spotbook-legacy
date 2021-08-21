@@ -4,7 +4,7 @@ export default class SpotClipList {
     // FETCHERS
     
     async fetchClipList(spot_id) {
-        let url = `http://127.0.0.1:8000/clips/api/clip-list/${spot_id}/`;
+        let url = `http://127.0.0.1:8000/clips/api/clip-list-spot/${spot_id}/`;
         try {
             let response = await(fetch(url));
             return await response.json();

@@ -1,6 +1,7 @@
 import SpotDetail from "./spotDetail.js";
 import SpotFollowButton from "./SpotFollowButton.js";
 import SpotLikeButton from "./SpotLikeButton.js";
+import SpotClipList from "./SpotClipList.js";
 
 export default class SpotPage {
 
@@ -23,6 +24,12 @@ export default class SpotPage {
         return div;
     }
 
+    async getSpotClipListDiv(spot_id) {
+        var obj = new SpotClipList();
+        var result = obj.getSpotClipList(spot_id);
+        return result;
+    }
+
     async getSpotPageDiv(spot_id) {
         var result = await this.buildSpotPageDiv(spot_id);
         console.log(result);
@@ -36,11 +43,13 @@ export default class SpotPage {
 
         var spotDetailDiv = await this.getSpotDetailDiv(spot_id);
         var spotFollowButtonDiv = await this.getSpotFollowButtonDiv(spot_id);
-        var SpotLikeButtonDiv = await this.getSpotLikeButtonDiv(spot_id);
+        var spotLikeButtonDiv = await this.getSpotLikeButtonDiv(spot_id);
+        var spotClipListDiv = await this.getSpotClipListDiv(spot_id);
 
         spotPageDiv.appendChild(spotDetailDiv);
         spotPageDiv.appendChild(spotFollowButtonDiv);
-        spotPageDiv.appendChild(SpotLikeButtonDiv);
+        spotPageDiv.appendChild(spotLikeButtonDiv);
+        spotPageDiv.appendChild(spotClipListDiv);
 
         return spotPageDiv;
     }
