@@ -1,43 +1,28 @@
-{% extends "frontend/base.html" %}
+{% extends 'frontend/base.html' %}
+
 
 {% block css %}
+    
     {{ block.super }}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'frontend/css/spotpage.css' %}">
+    <link rel="stylesheet" href="{% static 'frontend/css/components/SpotPage.css' %}">
+    
+        
+
 {% endblock css %}
+    
 
 {% block content %}
 
-    <div id='content'>
-        <div id='spot-details'></div>
-        <div id='follow-button-container'></div>
-        <div id='like-button-container'></div>
-        <div id='upload-spot-clip'></div>
-        <div id='spot-clips'></div>
-    </div>
-
-    <script type="text/javascript">
-        var spot_id = "{{ spot_id }}"
-    </script>
-
-    {% load static  %}
-    <script src="{% static 'frontend/js/components/spotFollowButton.js' %}"></script>
-    {% load static  %}
-    <script src="{% static 'frontend/js/components/SpotLikeButton.js' %}"></script>
-
     <script>
-        let followButton = new SpotFollowButton(targetDiv='follow-button-container', spot_id=spot_id);
-        followButton.renderButton();
-        let likeButton = new SpotLikeButton(targetDiv='like-button-container', spot_id=spot_id);
-        likeButton.renderButton();
+        const spot_id = "{{ spot_id }}";
     </script>
 
+    <div id='spotpage'></div>
 
-    {% load static %}
-    <script src="{% static 'frontend/js/spotpage.js' %}" type='text/javascript'></script>
-    {% load static %}
-    <script src="{% static 'frontend/js/uploadClip.js' %}" type='text/javascript'></script>
-    {% load static %}
-    <script src="{% static 'frontend/js/components/spotDetail.js' %}" type='text/javascript'></script>
+    {% load static  %}
+    <script src="{% static 'frontend/js/spotpage-index.js' %}" type='module'></script>
     
+
 {% endblock content %}
+    

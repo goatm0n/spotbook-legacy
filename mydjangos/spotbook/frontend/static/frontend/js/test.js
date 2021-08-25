@@ -1,4 +1,4 @@
-import SpotClip from "./components/SpotClip.js";
+import SpotPage from "./components/SpotPage.js";
 
-var clip = new SpotClip();
-clip.render('1', 'test-div');
+var obj = new SpotPage();
+obj.render(1, 'test-div');
