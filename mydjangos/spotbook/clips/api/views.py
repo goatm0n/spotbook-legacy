@@ -58,6 +58,7 @@ def clip_spot_view(request, pk):
 @permission_classes([IsAuthenticated])
 def clip_create_view(request):
     serializer = ClipSerializer(data=request.data)
+    print(serializer)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
