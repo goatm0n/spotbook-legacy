@@ -81,3 +81,6 @@
     - clip image displayed
     - timestamp displayed
     - like count component
+
+7. Clip Upload
+    - fix form component

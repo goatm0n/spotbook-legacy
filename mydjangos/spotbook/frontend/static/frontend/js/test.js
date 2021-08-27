@@ -1,4 +1,4 @@
-import SpotPage from "./components/SpotPage.js";
+import ClipUploadForm from "./components/ClipUploadForm.js";
 
-var obj = new SpotPage();
-obj.render(1, 'test-div');
+var obj = new ClipUploadForm();
+obj.render('test-div', 1);
