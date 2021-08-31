@@ -1,4 +1,4 @@
-import ClipUploadForm from "./components/ClipUploadForm.js";
+import SpotFeed from "./components/SpotFeed.js";
 
-var obj = new ClipUploadForm();
-obj.render('test-div', 1);
+var obj = new SpotFeed();
+obj.render('test-div', 'tester');

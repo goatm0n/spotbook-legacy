@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from spots.models import Spot
+from profiles.models import Profile
 from .serializers import SpotSerializer
 from rest_framework import status
 from django.contrib.auth import get_user_model
@@ -170,4 +171,6 @@ def does_user_follow(request, spot_id):
         return Response({"data": True}, status=200)
     else:
         return Response({}, status=404)
+
+
 

@@ -2,8 +2,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from clips.models import Clip
+from profiles.models import Profile
 from .serializers import ClipSerializer
-from django.http import HttpResponse
+import requests
+
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -139,4 +141,39 @@ def clip_likes_count_view(request, clip_id):
 
     return Response({'count': count}, status=200)
 
+@api_view(['GET'])
+def spot_feed_view(request, username):
+    spot_list_response = requests.get("http://127.0.0.1:8000/profiles/api/user-following-spots/{username}/".format(username=username))
+    spot_list_json = spot_list_response.json()
+    spot_list = spot_list_json["spot_list"]
+    
+    profile_list_response = requests.get("http://127.0.0.1:8000/profiles/api/user-following-profiles/{username}/".format(username=username))
+    profile_list_json = profile_list_response.json()
+    profile_list = profile_list_json["followers"]
+    
+    clip_list = []
+    clip_list_spots = []
+    clip_list_profiles = []
+
+    for spot in spot_list:
+        spot_clip_list_response = requests.get("http://127.0.0.1:8000/clips/api/clip-list-spot/{spot_id}/".format(spot_id=spot))
+        spot_clip_list_json = spot_clip_list_response.json()
+        spot_clip_list = spot_clip_list_json['clip_id_list']
+        
+        for clip in spot_clip_list:
+            clip_list_spots.append(clip)
+
+    for profile in profile_list:
+        profile_clip_list_response = requests.get("http://127.0.0.1:8000/clips/api/clip-list/{username}/".format(username=profile))
+        profile_clip_list = profile_clip_list_response.json()['clip_id_list']
+
+        for clip in profile_clip_list:
+            clip_list_profiles.append(clip)
+
+    in_spot_list = set(clip_list_spots)
+    in_profile_list = set(clip_list_profiles)
+    in_profile_but_not_in_spot = in_profile_list - in_spot_list
+    clip_list = list(in_spot_list) + list(in_profile_but_not_in_spot)
+    
+    return Response({"clip_list": clip_list })
 

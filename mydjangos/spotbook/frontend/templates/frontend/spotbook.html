@@ -1,0 +1,27 @@
+{% extends 'frontend/base.html' %}
+
+
+{% block css %}
+    {{ block.super }}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'frontend/css/components/SpotFeed.css' %}">    
+{% endblock css %}
+
+
+    
+
+
+{% block content %}
+    
+    <div id='spotfeed'></div>
+
+    <script>
+        const user_username = "{{ username }}";
+    </script>
+
+    {% load static %}
+    <script src="{% static 'frontend/js/spotbook-index.js' %}" type='module'></script>
+    
+
+{% endblock content %}
+    

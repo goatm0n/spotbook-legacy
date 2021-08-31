@@ -92,4 +92,30 @@ def does_user_follow(request, targetUsername, *args, **kwargs):
     else:
         return Response({}, status=404)
 
+@api_view(['GET'])
+def user_following_profiles_list(request, username):
+    user_profile_qs = Profile.objects.filter(user__username=username)
+    user_profile = user_profile_qs.first()
+    user_following_users_qs = user_profile.user.following.all()
 
+    profile_list = []
+
+    for profile in user_following_users_qs:
+        profile_list.append(profile.user.username)
+
+    return Response({'followers': profile_list})
+
+@api_view(['GET'])
+def user_following_spots_list(request, username):
+
+    profile_qs = Profile.objects.filter(user__username=username)
+    profile = profile_qs.first()
+
+    spots_qs = profile.user.following_spots.all()
+    
+    spot_list = []
+
+    for spot in spots_qs:
+        spot_list.append(spot.id)
+
+    return Response({"spot_list": spot_list})

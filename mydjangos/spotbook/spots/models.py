@@ -38,7 +38,7 @@ class Spot(models.Model):
     '''
     spot_obj = Spot.objects.first()
     spot_obj.followers.all() -> All users follwing this spot
-    user.following.all() -> All spots I follow
+    user.following_spots.all() -> All spots I follow
     '''
 
     def __str__(self):
