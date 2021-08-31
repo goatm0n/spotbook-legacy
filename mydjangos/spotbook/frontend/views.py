@@ -86,6 +86,16 @@ def spot_clip_view(request, clip_id):
 
     return render(request, 'frontend/spotClip.html', context)
 
+def spotbook_view(request):
+    if not request.user.is_authenticated:
+        return redirect('http://127.0.0.1:8000/spotbook/login/')
+    else:
+        context = {"username": request.user.username}
+        return render(request, 'frontend/spotbook.html', context)
+
+    
+    
+
 def test_view(request):
     #context = {'spot_id': spot_id}
     

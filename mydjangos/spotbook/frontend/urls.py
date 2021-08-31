@@ -1,8 +1,8 @@
-from django.urls import path, include
+from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.home_view, name='home-page'),
+    path('', views.spotbook_view, name='spotbook-page'),
     path('spotmap/', views.spotmap_view, name='spotmap-page'),
     path('create-spot-form/', views.createSpotFormView, name='create-spot-form-page'),
     path('spotpage/<str:pk>/', views.spotpage_view, name='spotpage-page'),
