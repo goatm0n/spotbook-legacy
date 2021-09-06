@@ -1,4 +1,9 @@
-import SpotFeed from "./components/SpotFeed.js";
+import TestComponent from "./components/TestComponent.js";
 
-var obj = new SpotFeed();
-obj.render('test-div', 'tester');
+var args = {
+    targetDiv: 'test-div',
+
+}
+
+var obj = new TestComponent(args);
+obj.renderDiv();
