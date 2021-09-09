@@ -97,7 +97,7 @@ def spotbook_view(request):
     
 
 def test_view(request):
-    #context = {'spot_id': spot_id}
+    context = {'content': 'special message'}
     
-    return render(request, 'frontend/test.html')#, context)
+    return render(request, 'frontend/test.html', context)
     

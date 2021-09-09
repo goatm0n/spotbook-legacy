@@ -1,17 +1,25 @@
 {% extends 'frontend/base.html' %}
 
+{% block js %}
+
+    {{ block.super }}
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.4/axios.js" integrity="sha512-un2apco0rYUiZXxbURvZ7oBq4u0cGrXaIbC4C1k5nAio6WRMyYvj8xKua3NqALOuu0F83zDha7nKoFCZzx26rg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock js %}
 
 {% block content %}
-
-<div id='test-div'></div>
-
-{% load static %}
-<link rel="stylesheet" href="{% static 'frontend/css/components/SpotFeed.css' %}">
-
-{% load static %}
-<script type="module" src="{% static 'frontend/js/test.js' %}"></script>
     
+    <div id="app">
+        <follow-profile-button></follow-profile-button>
+    </div>
+
+    {% load static %}
+    <script src="{% static 'frontend/js/components/vue/vFollowProfileButton.js' %}"></script>
+    {% load static %}
+    <script src="{% static 'frontend/js/test.js' %}"></script>
+    
+
 {% endblock content %}
-
-
     
+
+
